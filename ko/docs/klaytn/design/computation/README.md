@@ -1,2 +1,2 @@
-# 연산 <a id="computation"></a>
+# Computation <a id="computation"></a>
 
