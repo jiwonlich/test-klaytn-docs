@@ -1,154 +1,157 @@
-# 계정 <a id="accounts"></a>
+# Accounts <a id="accounts"></a>
 
-## Klaytn 계정 <a id="klaytn-accounts"></a>
+## Klaytn Accounts <a id="klaytn-accounts"></a>
 
-### 계정(account), 상태(state), 주소(adress)에 대한 개요 <a id="overview-of-account-state-and-address"></a>
+### Overview of Account, State, and Address <a id="overview-of-account-state-and-address"></a>
 
-Klaytn의 계정(account)은 개인의 잔액이나 스마트 컨트랙트에 관한 정보를 포함하는 데이터 구조입니다. Klaytn의 상태(state)는 모든 계정의 상태, 즉 Klaytn의 계정들에 저장된 모든 데이터의 과거와 현재 상태를 의미합니다. Klaytn 노드에서 트랜잭션이 실행되면, Klaytn의 상태는 모든 노드에서 변경됩니다.  Klaytn의 노드들이 같은 블록들을 같은 순서대로 처리했다면 Klaytn의 상태는 Klaytn 네트워크의 모든 노드에서 동일해야 합니다. 각 계정의 상태 정보는 각 계정의 식별에 사용되는 20바이트 주소로 참조할 수 있습니다.
+An account in Klaytn is a data structure containing information about a person's balance or a smart contract. Klaytn's state is the collection of all its accounts' states - that is, the past and current state of all data stored across Klaytn's accounts. When a transaction is executed on a Klaytn node, the state of Klaytn consequently changes across all its nodes. The state should be the same across all nodes in the Klaytn network if they have processed the same blocks in the same order. State information of each account is associated with a 20-byte address, which is used to identify each account.
 
-### 주소로부터 키 쌍(key pairs) 분리하기 <a id="decoupling-key-pairs-from-addresses"></a>
+### Decoupling Key Pairs From Addresses <a id="decoupling-key-pairs-from-addresses"></a>
 
-일반적인 블록체인 플랫폼의 계정은 다음과 같은 특정 길이의 암호화된 주소와 연결되어있습니다 "0x0fe2e20716753082222b52e753854f40afddffd2".  이 주소는 키 쌍(key pair)과 강하게 결합되어 있습니다. 키 쌍이 선택된 경우, 주소는 공개 키에서 파생됩니다. 이는 사용자 경험 측면에서 많은 단점을 가지고 있습니다. 몇가지 단점의 예시는 다음과 같습니다.
+An account in a typical blockchain platform is associated with a cryptographically processed address of a certain length that usually looks like this: "0x0fe2e20716753082222b52e753854f40afddffd2". This address is strongly coupled with a key pair. If a key pair is chosen, the address is derived from the public key. This has many disadvantages in terms of user experience. Some of them are the following:
 
-* 사용자가 원하는 주소를 가질 수 없습니다.
-* 보안성을 향상하기 위해 여러 키 쌍을 사용할 수 없습니다.
-* 개인키가 노출되었을 때나 사용자가 주기적으로 보안성 향상을 위해 개인키를 변경하고 싶을 때 키 쌍을 변경할 수 없습니다.
+* It is impossible for users to have addresses they want.
+* It is impossible for users to use multiple key pairs to increase security of their accounts.
+* It is impossible for users to change the account's key pair when the private key is accidentally exposed or when users want to update the private key periodically to increase the account's security.
 
-이런 단점들은 블록체인 플랫폼에서 사용자가 주소를 식별자로 생각할 수 없게 만드는 큰 장애물입니다. 이 문제를 해결하기 위해 클레이튼은 사용자가 자신의 주소와 키 쌍을 선택할 수 있도록 하는 기능을 제공합니다. 이 기능으로 사용자는 원하는 주소를 선택할 수 있고, 다중 키 쌍을 사용하여 보안을 강화할 수 있습니다. 키 쌍의 수는 하나 이상이 될 수 있으며, 키 쌍은 각기 다른 역할을 할 수 있습니다. 다중 키 쌍과 역할기반 키에 대한 상세 내용은 [다중 키 쌍과 역할기반 키](accounts.md#multiple-key-pairs-and-role-based-keys)를 참고해주세요.
+Those are big hurdles that users cannot think of an address as an identifier in the blockchain platform. To clear this hurdle, Klaytn provides a feature that users can choose their addresses and key pairs. With this feature, users can choose addresses that they want and they can use multiple key pairs to increase security. The number of key pairs can be one or more, and the key pairs can have different roles. For details of multiple key pairs or role-based keys, please refer to [Multiple Key Pairs & Role-Based Keys](accounts.md#multiple-key-pairs-and-role-based-keys).
 
-Klatn은 키 쌍과 주소가 강하게 결합되어 있는 전통적인 방식 또한 지원한다는 사실도 기억해주세요.
+It is worth noting that Klaytn also supports the old scheme that a key pair and an address are strongly coupled.
 
-### 다중 키 쌍과 역할기반 키 <a id="multiple-key-pairs-and-role-based-keys"></a>
+### Multiple Key Pairs and Role-Based Keys <a id="multiple-key-pairs-and-role-based-keys"></a>
 
-앞에서 설명한 것처럼 개인 키를 도난당하거나, 개인 키가 노출된 경우 다시 계정을 안전한 상태로 되돌릴 방법이 없습니다. 가장 좋은 방법은 다른 키 쌍을 생성하여 새 계정을 만들고 기존 계정에서 잔액을 옮기는 것입니다. 다중 서명 또는 용도별 키와 같은 고급 키 체계가 지원되지 않으면 매우 불편합니다. 이러한 문제를 더욱 효율적으로 해결하기 위해 Klaytn 계정은 다음 기능을 제공합니다.
+As described before, when the private key is stolen, exposed, or somehow compromised, there is nothing to do to restore the account’s security: the best option is to generate another key pair to create a new account, and migrate the balance from the old compromised account to the new one. Lack of support for advanced key schemes such as multi-sig or usage-specific key is yet another source of major inconvenience. To address those problems more efficiently, Klaytn accounts provide the following capabilities:
 
-* Klaytn 계정은 키 쌍과 연결되는데, 이 키 쌍은 변경될 수 있습니다.
-* Klaytn 계정은 다중 키 쌍을 지원하며, 각 키는 다른 목적을 가지도록 할 수 있습니다.
-* Klaytn 계정은 주소와 강하게 결합된 단일키를 가진 계정과 호환됩니다.
+* Klaytn account allows the key pair associated with the account to be changed.
+* Klaytn account supports multiple key pairs, along with the ability to assign each key with different purpose.
+* Klaytn account maintains compatibility with accounts having a single key that is strongly coupled with the address.
 
-Klaytn 계정의 역할 기반 키나 다중 키 기능을 이용하여, 사용자는 실생활에서 일어날 수 있는 개인키 노출 등 여러 보안 위협에 더욱 잘 대처할 수 있습니다. 예를 들어, 사용자가 자신의 개인키가 노출되었다는 것을 알게 되면 사용자는 자신의 계정에서 노출된 키 쌍을 제거하고 새키 쌍을 만들어 노출된 개인키와 간단히 교체 할 수 있습니다. 키 교체 작업을 위해서 미리 생성된 계정 정보 업데이트용 키를 이용할 수 있습니다. 이 키는 노출된 개인키와 따로 저장되어있어서 노출되지 않았어야 안전하게 이용할 수 있습니다.
+By utilizing Klaytn account’s role-based multi-key support, end-users can better handle real-life security risk situations such as private key mismanagement. For example, when a user realizes that his or her private key has been exposed, the user can simply replace the compromised private key by removing the exposed key pair from his or her account and creating a new key pair to replace them. This could be achieved by using a dedicated key used for updating account information, created in advance and stored separately from the compromised private key.
 
 ### Human-Readable Address \(HRA\) <a id="human-readable-address-hra"></a>
 
-블록체인 플랫폼의 주소 체계 \(예 : "0x0fe2e20716753082222b52e753854f40afddffd2"\)는 계정 소유자의 개인 정보를 효율적으로 보호한다는 점에서 장점이 있지만, 사용자 경험 측면에서는 매우 불편합니다. 첫째, 인간의 두뇌는 이런 주소를 암기하거나 인식하기 어려워하기 때문에, 이런 주소 체계는 입력 실수 같은 다양한 인적 오류를 유발하여 중대한 재정적 손해를 입힐 수도 있습니다. 둘째, 이런 주소 체계는 사용자가 선호하는 사용하거나 기억하기 쉬운 주소를 선택할 기회를 뺏어갑니다. Combined, these problems are among the toughest usability hurdles that cause dApp user experience for typical end-users \(who are more accustomed to the simpler, frictionless user experience offered by legacy mobile apps or services\) to be perceived as alien, incomprehensible, and severely inconvenient. To overcome such challenges without undergoing architectural modifications at large-scale and while preserving backward compatibility, Klaytn opts to provide a mapping between a 20-byte address to a 20-byte length text string that end-users could assign their own preferred values to. 이 기능은 human-readable address \(HRA\)라고 불립니다. 이 기능은 현재 개발 중이며 준비가 되면 더 많은 정보가 제공될 것입니다.
+Although the address scheme \(e.g., "0x0fe2e20716753082222b52e753854f40afddffd2"\) has its own strengths in that it efficiently protects the privacy of account holders, it also proposes major problems in terms of end-user experience. First, it is very difficult for a human brain to memorize, or even recognize, such addresses, making them prone to input mistakes and various human errors that often lead to non-trivial financial damages. Second, such scheme takes away from end-users the power to choose one’s own preferred identity handle that’s easier to memorize or use. Combined, these problems are among the toughest usability hurdles that cause dApp user experience for typical end-users \(who are more accustomed to the simpler, frictionless user experience offered by legacy mobile apps or services\) to be perceived as alien, incomprehensible, and severely inconvenient. To overcome such challenges without undergoing architectural modifications at large-scale and while preserving backward compatibility, Klaytn opts to provide a mapping between a 20-byte address to a 20-byte length text string that end-users could assign their own preferred values to. This feature in Klaytn is called human-readable address \(HRA\). Currently, this feature is under development, and we will provide more information when it is ready.
 
-### Klaytn 지갑 키 형식 <a id="klaytn-wallet-key-format"></a>
+### Klaytn Wallet Key Format <a id="klaytn-wallet-key-format"></a>
 
-Klaytn wallet 키 형식은 해당 주소와 함께 개인키를 쉽게 다룰 수 있도록 만들어졌습니다. 이는 사용자가 개인키를 주소와 함께 관리하기 쉽게 만듭니다. 이 형식은 `0x{private key}0x{type}0x{address in hex}`입니다. 16진법을 따르며, `{type}`은 `00`여야 합니다. 다른 값은 예약되어 있습니다. 예시는 다음과 같습니다.
+Klaytn wallet key format is provided to easily handle a private key along with the corresponding address. It makes easier for a user to maintain his/her private key with an address. The format is `0x{private key}0x{type}0x{address in hex}` in hexadecimal notation, where `{type}` must be `00`. Other values are reserved. An example is shown below:
 
 ```text
 0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d80x000xa94f5374fce5edbc8e2a8697c15331677e6ebf0b
 ```
 
-이 형식은 현재 [Klaytn Wallet](../../toolkit/klaytn-wallet.md)에서 지원됩니다.
+This format is currently supported in [Klaytn Wallet](../../toolkit/klaytn-wallet.md).
 
-### Klaytn 계정 유형 <a id="klaytn-account-types"></a>
+### Klaytn Account Types <a id="klaytn-account-types"></a>
 
-Klaytn에는 두 가지 유형의 계정이 있습니다 : 외부 소유 계정 \(EOAs\) 및 스마트 컨트랙트 계정\(SCAs\)
+There are two types of accounts in Klaytn: externally owned accounts \(EOAs\), and smart contract accounts \(SCAs\).
 
-#### 외부 소유 계정 \(EOAs\) <a id="externally-owned-accounts-eoas"></a>
+#### Externally Owned Accounts \(EOAs\) <a id="externally-owned-accounts-eoas"></a>
 
-외부 소유 계정에는 논스(nonce) 및 잔고와 같은 정보가 있습니다. 이 유형의 계정에는 코드 또는 스토리지가 없습니다. EOA는 개인키로 제어되며 관련 코드를 가지지 않습니다. EOA는 키 페어를 사용하여 생성되고, 키 페어를 가진 어떤 사람이든 EOA를 제어 할 수 있습니다. 계정키는 [Account Key](accounts.md#account-key) 장에 설명되어있습니다.
+Externally owned accounts have information such as nonce and balance. This type of accounts does not have code or storage. EOAs are controlled by private keys and do not have code associated with them. An EOA can be created using key pairs and subsequently controlled by anyone with the key pairs. The account key is described in the section [Account Key](accounts.md#account-key).
 
-**속성**
+**Attributes**
 
-| 속성            | 타입                                    | 설명                                                                                                                                                                                                                                                                                                                                          |
-|:------------- |:------------------------------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type          | uint8 \(Go\)                        | EOA의 유형입니다. EOA의 경우 Type은 **0x1**이어야 합니다.                                                                                                                                                                                                                                                                                                   |
-| nonce         | uint64 \(Go\)                       | 트랜잭션의 순서를 정하기 위한 시퀀스 번호(Sequence number). 다음 처리 될 트랜잭션은 이 값과 같은 Nonce값을 가집니다.                                                                                                                                                                                                                                                               |
-| balance       | \*big.Int \(Go\)                  | 계정이 가지고 있는 Klay의 양                                                                                                                                                                                                                                                                                                                          |
-| humanReadable | bool \(Go\)                         | 계정이 Human-readable address와 연결되어있는지 알려주는 Boolean 값 [HRA](accounts.md#human-readable-address-hra)은 현재 개발중이므로, 이 값은 모든 계정에서 false로 지정되어있습니다.                                                                                                                                                                                                  |
-| key           | [AccountKey](accounts.md#account-key) | 이 계정과 연결된 키. 이 필드는 [AccountKeyLegacy](accounts.md#accountkeylegacy), [AccountKeyPublic](accounts.md#accountkeypublic), [AccountKeyFail](accounts.md#accountkeyfail), [AccountKeyWeightedMultisig](accounts.md#accountkeyweightedmultisig), [AccountKeyRoleBased](accounts.md#accountkeyrolebased) 중 어떤 것이라도 될 수 있습니다. 트랜잭션의 서명은 이 키로 검증됩니다. |
+| Attribute     | Type                                  | Description                                                                                                                                                                                                                                                                                                                                                                                           |
+|:------------- |:------------------------------------- |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| type          | uint8 \(Go\)                        | The type of externally owned accounts. It must be **0x1** for EOAs.                                                                                                                                                                                                                                                                                                                                   |
+| nonce         | uint64 \(Go\)                       | A sequence number used to determine the order of transactions. The transaction to be processed next has the same nonce with this value.                                                                                                                                                                                                                                                               |
+| balance       | \*big.Int \(Go\)                  | The amount of KLAY the account has.                                                                                                                                                                                                                                                                                                                                                                   |
+| humanReadable | bool \(Go\)                         | A boolean value indicating that the account is associated with a human-readable address. Since [HRA](accounts.md#human-readable-address-hra) is under development, this value is false for all accounts.                                                                                                                                                                                              |
+| key           | [AccountKey](accounts.md#account-key) | The key associated with this account. This field can be any of [AccountKeyLegacy](accounts.md#accountkeylegacy), [AccountKeyPublic](accounts.md#accountkeypublic), [AccountKeyFail](accounts.md#accountkeyfail), [AccountKeyWeightedMultisig](accounts.md#accountkeyweightedmultisig), [AccountKeyRoleBased](accounts.md#accountkeyrolebased). Signatures in transactions are verified with this key. |
 
-#### 스마트 컨트랙트 계정 \(SCAs\) <a id="smart-contract-accounts-scas"></a>
+#### Smart Contract Accounts \(SCAs\) <a id="smart-contract-accounts-scas"></a>
 
-EOA와 달리 SCA에는 관련 코드가 있으며 해당 코드로 제어됩니다. SCA는 스마트 컨트랙트 배포(deployment) 트랜잭션에 의해 생성됩니다. 일단 배포되면 SCA는 자체적으로 새 트랜잭션을 시작할 수 없으며, EOA 또는 다른 SCA나 다른 계정에 의해 작동되어야합니다.
+In contrast to EOAs, SCAs have code associated with them and are controlled by their code. SCAs are created by smart contract deployment transactions; once deployed, an SCA cannot initiate new transactions by itself and must be triggered by another account, either by an EOA or another SCA.
 
-**속성**
+**Attributes**
 
-| 속성            | 형식                                    | 설명                                                                                                                                                                                                                                                                                                                                          |
-|:------------- |:------------------------------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type          | uint8 \(Go\)                        | 스마트 컨트랙트 계정의 유형입니다. SCA의 경우 Type은 **0x2**이어야 합니다.                                                                                                                                                                                                                                                                                           |
-| nonce         | uint64 \(Go\)                       | 트랜잭션의 순서를 정하기 위한 시퀀스 번호(Sequence number). 다음 처리 될 트랜잭션은 이 값과 같은 Nonce값을 가집니다.                                                                                                                                                                                                                                                               |
-| balance       | \*big.Int \(Go\)                  | 계정이 가지고 있는 Klay의 양                                                                                                                                                                                                                                                                                                                          |
-| humanReadable | bool \(Go\)                         | 계정이 Human-readable address와 연결되어있는지 알려주는 Boolean 값 [HRA](accounts.md#human-readable-address-hra)은 현재 개발중이므로, 이 값은 모든 계정에서 false로 지정되어있습니다.                                                                                                                                                                                                  |
-| key           | [AccountKey](accounts.md#account-key) | 이 계정과 연결된 키. 이 필드는 [AccountKeyLegacy](accounts.md#accountkeylegacy), [AccountKeyPublic](accounts.md#accountkeypublic), [AccountKeyFail](accounts.md#accountkeyfail), [AccountKeyWeightedMultisig](accounts.md#accountkeyweightedmultisig), [AccountKeyRoleBased](accounts.md#accountkeyrolebased) 중 어떤 것이라도 될 수 있습니다. 트랜잭션의 서명은 이 키로 검증됩니다. |
-| codeHash      | \[\]byte \(Go\)                   | 계정의 스마트 컨트랙트 코드의 해시. 이 값은 변경할 수 없으며, 스마트 컨트랙트가 생성 될 때만 설정됩니다.                                                                                                                                                                                                                                                                               |
-| storageRoot   | \[32\]byte \(Go\)                 | 계정에 저장된 모든 변수들의 값을 포함하는 Merkle Patricia trie 루트의 256비트 해시입니다.                                                                                                                                                                                                                                                                               |
-| codeFormat    | uint8 \(Go\)                        | 계정이 지원하는 interpreter 버전입니다. 16까지 설정할 수 있으며,  현재는 EVM\(0x00\)만 지원합니다.                                                                                                                                                                                                                                                                      |
-| vmVersion     | uint8 \(Go\)                        | 계정이 배포될 당시의 프로토콜 업그레이드 (하드 포크) 정보 (ex.  0x0(constantinople), 0x1(istanbul, london,...)).  16까지 존재하며,  컨트랙트 배포 시 자동으로 값이 설정됩니다.                                                                                                                                                                                                              |
+| Attribute     | Type                                  | Description                                                                                                                                                                                                                                                                                                                                                                                           |
+|:------------- |:------------------------------------- |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| type          | uint8 \(Go\)                        | The type of smart contract accounts. It must be **0x2** for SCAs.                                                                                                                                                                                                                                                                                                                                     |
+| nonce         | uint64 \(Go\)                       | A sequence number used to determine the order of transactions. The transaction to be processed next has the same nonce with this value.                                                                                                                                                                                                                                                               |
+| balance       | \*big.Int \(Go\)                  | The amount of KLAY the account has.                                                                                                                                                                                                                                                                                                                                                                   |
+| humanReadable | bool \(Go\)                         | A boolean value indicating that the account is associated with a human-readable address. Since [HRA](accounts.md#human-readable-address-hra) is under development, this value is false for all accounts.                                                                                                                                                                                              |
+| key           | [AccountKey](accounts.md#account-key) | The key associated with this account. This field can be any of [AccountKeyLegacy](accounts.md#accountkeylegacy), [AccountKeyPublic](accounts.md#accountkeypublic), [AccountKeyFail](accounts.md#accountkeyfail), [AccountKeyWeightedMultisig](accounts.md#accountkeyweightedmultisig), [AccountKeyRoleBased](accounts.md#accountkeyrolebased). Signatures in transactions are verified with this key. |
+| codeHash      | \[\]byte \(Go\)                   | The hash of the account's smart contract code. This value is immutable, which means it is set only when the smart contract is created.                                                                                                                                                                                                                                                                |
+| storageRoot   | \[32\]byte \(Go\)                 | A 256-bit hash of the root of the Merkle Patricia Trie that contains the values of all the storage variables in the account.                                                                                                                                                                                                                                                                          |
+| codeFormat    | uint8 \(Go\)                        | Supporting interpreter version. Up to 16 can be set. Currently, it supports EVM\(0x00\) only.                                                                                                                                                                                                                                                                                                       |
+| vmVersion     | uint8 \(Go\)                        | The protocol upgrade (hard fork) information at contract deployment time (ex. 0x0(constantinople), 0x1(istanbul,london,...)). Up to 16 can be used. It is automatically created with the contract.                                                                                                                                                                                                    |
 
 {% hint style="success" %}
-NOTE: Klaytn v1.7.0부터는 스마트 컨트랙트 계정의 속성으로 vmVersion이 추가됩니다.
+NOTE: From klaytn v1.7.0 onwards, vmVersion attribute will be added to the Smart Contract Account.
 {% endhint %}
 
-### Klaytn 계정 유형 ID <a id="klaytn-account-type-id"></a>
-아래는 각 계정 유형에 할당된 계정 유형 ID입니다.
+### Klaytn Account Type ID <a id="klaytn-account-type-id"></a>
+Below are the Account Type ID assigned to each Account Type.
 
-| 계정 유형              | 계정 유형 ID |
-| ------------------ | -------- |
-| 외부 소유 계정 (EOAs)    | 0x1      |
-| 스마트 컨트랙트 계정 (SCAs) | 0x2      |
+| Account Type                   | Account Type ID |
+| ------------------------------ | --------------- |
+| Externally Owned Account (EOA) | 0x1             |
+| Smart Contract Account (SCA)   | 0x2             |
 
-## 계정 키 <a id="account-key"></a>
+## Account Key <a id="account-key"></a>
 
-계정 키는 계정과 연결된 키 구조를 나타냅니다.
+An account key represents the key structure associated with an account.
 
 ### AccountKeyNil <a id="accountkeynil"></a>
 
-AccountKeyNil은 빈(empty) 키를 나타냅니다. 계정이 AccountKeyNil object를 가지려고 하면 트랜잭션은 실패합니다. AccountKeyNil은 역할기반 키(role-based keys)를 이용하는 TxTypeAccountUpdate 트랜잭션에만 사용됩니다. 예를 들어, 계정이 RoleAccountUpdate 키만 업데이트하려고 할 때TxTypeAccountUpdate 트랜잭션의 키 필드는 다음과 같습니다.
+AccountKeyNil represents an empty key. If an account tries to have an AccountKeyNil object, the transaction will be failed. AccountKeyNil is used only for TxTypeAccountUpdate transactions with role-based keys. For example, if an account tries to update RoleAccountUpdate key only, the key field of the TxTypeAccountUpdate transaction would be:
 
 `[AccountKeyNil, NewKey, AccountKeyNil]`
 
-그런 다음 RoleAccountUpdate 키만 업데이트됩니다. 다른 역할은 업데이트되지 않습니다. 상세사항을 알고 싶으시면 [AccountKeyRoleBased](accounts.md#accountkeyrolebased)를 참고해주세요.
+Then, only the RoleAccountUpdate key is updated. Other roles are not updated. Refer to the [AccountKeyRoleBased](accounts.md#accountkeyrolebased) for more detail.
 
-#### 속성 <a id="attributes"></a>
+#### Attributes <a id="attributes"></a>
 
-AccountKeyNil에 대한 속성이 없습니다.
+No attributes for AccountKeyNil.
 
-#### RLP 인코딩 <a id="rlp-encoding"></a>
+#### RLP Encoding <a id="rlp-encoding"></a>
 
 `0x80`
 
 ### AccountKeyLegacy <a id="accountkeylegacy"></a>
 
-AccountKeyLegacy는 해당 키 쌍에서 파생된 주소를 가진 계정에 사용됩니다. 계정이 AccountKeyLegacy를 가지고 있는 경우, 트랜잭션 유효성 검사 절차는 다음과 같이 수행됩니다. 일반적인 블록체인 플랫폼의 절차와 같습니다.
+AccountKeyLegacy is used for the account having an address derived from the corresponding key pair. If an account has AccountKeyLegacy, the transaction validation process is done like below \(as typical Blockchain platforms did\):
 
-* 공개키를 `ecrecover(txhash, txsig)`로부터 얻습니다.
-* 공개키의 주소를 얻습니다.
-* 주소는 발신자입니다.
+* Get the public key from `ecrecover(txhash, txsig)`.
+* Get the address of the public key.
+* The address is the sender.
 
-#### 속성 <a id="attributes"></a>
+#### Attributes <a id="attributes"></a>
 
-| 속성   | 타입             | 설명                                           |
-|:---- |:-------------- |:-------------------------------------------- |
-| Type | uint8 \(Go\) | AccountKeyLegacy의 유형입니다. 이는 **0x01**이어야 합니다. |
+| Attribute | Type           | Description                                          |
+|:--------- |:-------------- |:---------------------------------------------------- |
+| Type      | uint8 \(Go\) | The type of AccountKeyLegacy. This must be **0x01**. |
 
-#### RLP 인코딩 <a id="rlp-encoding"></a>
+#### RLP Encoding <a id="rlp-encoding"></a>
 
 `0x01c0`
 
 ### AccountKeyPublic <a id="accountkeypublic"></a>
 
-AccountKeyPublic은 공개키를 하나 가진 계정에 사용됩니다. 계정에 AccountKeyPublic 객체가 있는 경우, 트랜잭션 유효성 검사 프로세스는 다음과 같이 수행됩니다:
+AccountKeyPublic is used for accounts having one public key.  
+If an account has an AccountKeyPublic object, the transaction validation process is done like below:
 
-* `ecrecover(txhash, txsig)`로부터 파생된 공개키를 얻습니다.
-* 파생된 공개키가 해당 계정의 공개키와 같은지 확인합니다.
+* Get the public key derived from `ecrecover(txhash, txsig)`.
+* Check that the derived public key is the same as the corresponding
 
-#### 속성 <a id="attributes"></a>
+  account's public key.
 
-| 속성   | 형식                    | 설명                                             |
-|:---- |:--------------------- |:---------------------------------------------- |
-| Type | uint8 \(Go\)        | AccountKeyPublic의 유형입니다. 이는 **0x02**가 되어야 합니다. |
-| Key  | \[33\]byte \(Go\) | 키는 S256 곡선에서 압축된 공개키여야 합니다.                    |
+#### Attributes <a id="attributes"></a>
 
-#### RLP 인코딩 <a id="rlp-encoding"></a>
+| Attribute | Type                  | Description                                          |
+|:--------- |:--------------------- |:---------------------------------------------------- |
+| Type      | uint8 \(Go\)        | The type of AccountKeyPublic. This must be **0x02**. |
+| Key       | \[33\]byte \(Go\) | Key should be a compressed public key on S256 curve. |
+
+#### RLP Encoding <a id="rlp-encoding"></a>
 
 `0x02 + encode(CompressedPubKey)`
 
-**참고**: CompressedPubKey는 [SEC1](https://www.secg.org/SEC1-Ver-1.0.pdf)에 정의된 압축된 형식의 공개키입니다. 즉, PubkeyY가 짝수이면 0x02{PubkeyX} 이고, 그렇지 않으면 0x03{PubkeyX} 입니다.
+**NOTE**: CompressedPubKey is a public key in a compressed format defined in [SEC1](https://www.secg.org/SEC1-Ver-1.0.pdf). In short, 0x02{PubkeyX} if PubkeyY is an even number or 0x03{PubkeyX} otherwise.
 
-#### RLP 인코딩 \(예시\) <a id="rlp-encoding-example"></a>
+#### RLP Encoding \(Example\) <a id="rlp-encoding-example"></a>
 
 ```javascript
 prvkey 0xf8cc7c3813ad23817466b1802ee805ee417001fcce9376ab8728c92dd8ea0a6b
@@ -160,48 +163,48 @@ RLP: 0x02a102dbac81e8486d68eac4e6ef9db617f7fbd79a04a3b323c982a09cdfc61f0ae0e8
 
 ### AccountKeyFail <a id="accountkeyfail"></a>
 
-계정에 AccountKeyFail 키가 있으면 트랜잭션 유효성 검증 프로세스는 항상 실패하게 됩니다. 특정 스마트 컨트랙트 계정에서 전송된 트랜잭션이 항상 실패하도록 사용될 수 있습니다.
+If an account has the key AccountKeyFail, the transaction validation process always fails. It can be used for smart contract accounts so that a transaction sent from the smart contract account always fails.
 
-#### 속성 <a id="attributes"></a>
+#### Attributes <a id="attributes"></a>
 
-| 속성   | 형식             | 설명                                            |
-|:---- |:-------------- |:--------------------------------------------- |
-| Type | uint8 \(Go\) | AcccountKeyFail의 유형입니다. 이는 **0x03**가 되어야 합니다. |
+| Attribute | Type           | Description                                       |
+|:--------- |:-------------- |:------------------------------------------------- |
+| Type      | uint8 \(Go\) | The type of AcccountKeyFail. It must be **0x03**. |
 
-#### RLP 인코딩 <a id="rlp-encoding"></a>
+#### RLP Encoding <a id="rlp-encoding"></a>
 
 `0x03c0`
 
 ### AccountKeyWeightedMultiSig <a id="accountkeyweightedmultisig"></a>
 
-AccountKeyWeightedMultiSig는 계정 키 타입입니다. 여기에는 threshold와 WeightedPublicKeys가 저장되어 있습니다. WeightedPublicKeys는 공개키와 공개키의 가중치(weight)로 이루어진 리스트입니다. AccountKeyWeightedMultiSig와 연결된 계정에 대해 유효한 트랜잭션이 되려면, 다음 조건을 만족해야합니다.
-* 서명된 공개키의 가중치 합계가 임계값(threshold)보다 커야합니다.
-* 트랜잭션에 유효하지 않은 서명이 포함되면 안 됩니다.
-* 서명된 공개키 개수가 WeightedPublicKey 개수보다 적어야만 합니다.
+AccountKeyWeightedMultiSig is an account key type containing a threshold and WeightedPublicKeys which contains a list consisting of a public key and its weight. In order for a transaction to be valid for an account associated with AccountKeyWeightedMultiSig, the following conditions should be satisfied:
+* The weighted sum of the signed public keys should be larger than the threshold.
+* The invalid signature should not be included in the transaction.
+* The number of signed public keys should be less than the number of weightedPublicKeys.
 
 {% hint style="success" %}
 NOTE: The following multiSig validation logic have been changed with the protocol upgrade, or the "hard fork" introduced in klaytn v1.7.0.
-* 트랜잭션에 유효하지 않은 서명이 포함되면 안 됩니다.
-* 서명된 공개키 개수가 WeightedPublicKey 개수보다 적어야만 합니다. If you want the previous document, please refer to [previous document](transaction-fees/transaction-fees-previous.md).
+* The invalid signature should not be included in the transaction.
+* The number of signed public keys should be less than the number of weightedPublicKeys. If you want the previous document, please refer to [previous document](transaction-fees/transaction-fees-previous.md).
 
-v1.7.0 프로토콜 업그레이드 - **Istanbul** 하드포크 및 Klaytn의 자체 사항들을 포함하는 비호환 변경이 적용됩니다. It has been enabled from block number `#75373312` in case of the Baobab network. Cypress 메인넷의 경우 다음 버전부터 프로토콜 업그레이드가 반영됩니다.
+v1.7.0 Protocol Upgrade - incompatible changes including **Istanbul** hard fork items and Klaytn's own items. It has been enabled from block number `#75373312` in case of the Baobab network. Cypress mainnet will be subject to the same protocol upgrade in the next version.
 
-v1.7.3 프로토콜 업그레이드 - **London** 하드 포크의 Base Fee를 포함한 비호환 변경이 적용됩니다. It has been enabled from block number `#80295291` in case of the Baobab network. Cypress 메인넷의 경우 다음 버전부터 프로토콜 업그레이드가 반영됩니다.
+v1.7.3 Protocol Upgrade - incompatible changes including Base Fee from the **London** hard fork. It has been enabled from block number `#80295291` in case of the Baobab network. Cypress mainnet will be subject to the same protocol upgrade in the next version.
 {% endhint %}
 
-#### 속성 <a id="attributes"></a>
+#### Attributes <a id="attributes"></a>
 
-| 속성                 | 형식                                  | 설명                                                                                                      |
-|:------------------ |:----------------------------------- |:------------------------------------------------------------------------------------------------------- |
-| Type               | uint8 \(Go\)                      | AccountKeyWeightedMultiSig의 유형입니다. 이는 **0x04**이어야 합니다.                                                  |
-| Threshold          | uint \(Go\)                       | 검증 임계값(threshold) 유효한 거래가 되려면 서명의 가중치(weight) 합계가 임계값(threshold) 이상이어야합니다.                              |
-| WeightedPublicKeys | \[\]{uint, \[33\]byte} \(Go\) | 가중 공개키 목록(A list of weighted public keys). 가중 공개키(weighted public key)에는 압축된 공개키와 그 가중치(weight)가 포함됩니다. |
+| Attribute          | Type                                | Description                                                                                                                    |
+|:------------------ |:----------------------------------- |:------------------------------------------------------------------------------------------------------------------------------ |
+| Type               | uint8 \(Go\)                      | The type of AccountKeyWeightedMultiSig. This must be **0x04**.                                                                 |
+| Threshold          | uint \(Go\)                       | Validation threshold. To be a valid transaction, the weight sum of signatures should be larger than or equal to the threshold. |
+| WeightedPublicKeys | \[\]{uint, \[33\]byte} \(Go\) | A list of weighted public keys. A weighted public key contains a compressed public key and its weight.                         |
 
-#### RLP 인코딩 <a id="rlp-encoding"></a>
+#### RLP Encoding <a id="rlp-encoding"></a>
 
 `0x04 + encode([threshold, [[weight, CompressedPubKey1], [weight2, CompressedPubKey2]]])`
 
-#### RLP 인코딩 \(예시\) <a id="rlp-encoding-example"></a>
+#### RLP Encoding \(Example\) <a id="rlp-encoding-example"></a>
 
 ```javascript
 Threshold 3
@@ -223,38 +226,38 @@ RLP: 0x04f89303f890e301a102c734b50ddb229be5e929fc4aa8080ae8240a802d23d3290e5e615
 
 ### AccountKeyRoleBased <a id="accountkeyrolebased"></a>
 
-AccountKeyRoleBased는 역할기반 키를 의미합니다. 역할은 [Roles](accounts.md#roles)에 명시되어있습니다.
+AccountKeyRoleBased represents a role-based key. The roles are specified at [Roles](accounts.md#roles).
 
-#### 속성 <a id="attributes"></a>
+#### Attributes <a id="attributes"></a>
 
-| 속성   | 형식                          | 설명                                                                                                               |
-|:---- |:--------------------------- |:---------------------------------------------------------------------------------------------------------------- |
-| Type | uint8 \(Go\)              | AccountKeyRoleBased의 유형입니다. 이는 **0x05**이어야 합니다.                                                                  |
-| Keys | \[\]{AccountKey} \(Go\) | 키 목록. 키는 AccountKeyNil, AccountKeyLegacy, AccountKeyPublic, AccountKeyFail 및 AccountKeyWeightedMultiSig 중 하나입니다. |
+| Attribute | Type                        | Description                                                                                                                            |
+|:--------- |:--------------------------- |:-------------------------------------------------------------------------------------------------------------------------------------- |
+| Type      | uint8 \(Go\)              | The type of AccountKeyRoleBased. It must be **0x05**.                                                                                  |
+| Keys      | \[\]{AccountKey} \(Go\) | A list of keys. A key can be any of AccountKeyNil, AccountKeyLegacy, AccountKeyPublic, AccountKeyFail, and AccountKeyWeightedMultiSig. |
 
-#### 역할 <a id="roles"></a>
+#### Roles <a id="roles"></a>
 
-AccountKeyRoleBased의 역할은 다음과 같이 정의됩니다.
+Roles of AccountKeyRoleBased are defined as below:
 
-| 역할                | 설명                                                                                                                             |
-|:----------------- |:------------------------------------------------------------------------------------------------------------------------------ |
-| RoleTransaction   | Index 0. 기본키. TxTypeAccountUpdate 이외의 트랜잭션은 이 역할의 키로 서명해야합니다.                                                                  |
-| RoleAccountUpdate | Index 1. TxTypeAccountUpdate 트랜잭션은 이 키로 서명되어야 합니다. 이 키가 계정에 없으면, RoleTransaction 키를 사용하여 TxTypeAccountUpdate 트랜잭션의 유효성이 검사됩니다. |
-| RoleFeePayer      | Index 2. 이 계정이 발신자 대신 트랜잭션 수수료를 보내려면 이 키로 트랜잭션에 서명해야합니다.  이 키가 계정에 없으면 RoleTransaction 키를 사용하여 수수료 위임 트랜잭션의 유효성이 검사됩니다.        |
+| Role              | Description                                                                                                                                                                                                                        |
+|:----------------- |:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RoleTransaction   | Index 0. Default key. Transactions other than TxTypeAccountUpdate should be signed by the key of this role.                                                                                                                        |
+| RoleAccountUpdate | Index 1. TxTypeAccountUpdate transaction should be signed by this key. If this key is not present in the account, TxTypeAccountUpdate transaction is validated using RoleTransaction key.                                          |
+| RoleFeePayer      | Index 2. If this account wants to send tx fee instead of the sender, the transaction should be signed by this key.  If this key is not present in the account, a fee-delegated transaction is validated using RoleTransaction key. |
 
-#### RLP 인코딩 <a id="rlp-encoding"></a>
+#### RLP Encoding <a id="rlp-encoding"></a>
 
 `0x05 + encode([key1, key2, key3])`
 
-참고: key1, key2 및 key3은 위의 키(AccountKeyNil, AccountKeyLegacy, AccountKeyPublic, AccountKeyFail 및 AccountKeyWeightedMultiSig\) 중 하나입니다.
+Note that key1, key2, and key3 can be any of above keys \(AccountKeyNil, AccountKeyLegacy, AccountKeyPublic, AccountKeyFail, and AccountKeyWeightedMultiSig\).
 
 #### Omissible and Expandable Roles <a id="omissible-and-expandable-roles"></a>
 
-The roles can be omitted from the last index, and the omitted roles are mapped to the first role. 그러나, 중간에 있는 역할을 생략할 수 없으므로 RoleAccountUpdate 없이는 RoleTransaction 및 RoleFeePayer를 설정할 수 없습니다. 예를 들어, 역할기반 키가 `0x05 + encode([key1, key2])`로 설정되어있으면, RoleFeePayer는 `0x05 + encode ([key1, key2, key1])`로 설정되어있는 것처럼 작동합니다.
+The roles can be omitted from the last index, and the omitted roles are mapped to the first role. However, a role in the middle cannot be omitted, which means RoleTransaction and RoleFeePayer cannot be set without RoleAccountUpdate. For example, if a role-based key is set to `0x05 + encode([key1, key2])`, RoleFeePayer works as if the key is set like `0x05 + encode([key1, key2, key1])`.
 
-This feature allows for more roles to be added in the future. 새 역할이 제공되면 이전 역할로 이미 생성된 새 계정 역할이 첫 번째 역할에 대응됩니다.
+This feature allows for more roles to be added in the future. If a new role is provided, the new role of accounts already created with old roles is mapped to the first role.
 
-#### RLP 인코딩 \(예시\) <a id="rlp-encoding-example"></a>
+#### RLP Encoding \(Example\) <a id="rlp-encoding-example"></a>
 
 ```javascript
 RoleTransaction Key
@@ -275,14 +278,14 @@ PubkeyY 0x94c27901465af0a703859ab47f8ae17e54aaba453b7cde5a6a9e4a32d45d72b2
 RLP: 0x05f898a302a103e4a01407460c1c03ac0c82fd84f303a699b210c0b054f4aff72ff7dcdf01512db84e04f84b02f848e301a103e4a01407460c1c03ac0c82fd84f303a699b210c0b054f4aff72ff7dcdf01512de301a10336f6355f5b532c3c1606f18fa2be7a16ae200c5159c8031dd25bfa389a4c9c06a302a102c8785266510368d9372badd4c7f4a94b692e82ba74e0b5e26b34558b0f081447
 ```
 
-## 계정 키 유형 ID <a id="account-key-type-id"></a>
-다음은 각 계정 키 유형에 지정된 계정 키 유형 ID입니다.
+## Account Key Type ID <a id="account-key-type-id"></a>
+Below are the Account Key Type ID assigned to each Account Key Type.
 
-| 계정 키 유형                    | 계정 키 유형 ID |
-| -------------------------- | ---------- |
-| AccountKeyLegacy           | 0x01       |
-| AccountKeyPublic           | 0x02       |
-| AccountKeyFail             | 0x03       |
-| AccountKeyWeightedMultiSig | 0x04       |
-| AccountKeyRoleBased        | 0x05       |
+| Account Key Type           | Account Key Type ID |
+| -------------------------- | ------------------- |
+| AccountKeyLegacy           | 0x01                |
+| AccountKeyPublic           | 0x02                |
+| AccountKeyFail             | 0x03                |
+| AccountKeyWeightedMultiSig | 0x04                |
+| AccountKeyRoleBased        | 0x05                |
 
