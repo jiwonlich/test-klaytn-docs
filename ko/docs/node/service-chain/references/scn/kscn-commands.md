@@ -1,1 +1,1 @@
-# kscn 명령어
+# kscn commands
