@@ -1,10 +1,10 @@
 # ERC-20 <a id="erc-20"></a>
 
-## 소개 <a id="introduction"></a>
+## Introduction <a id="introduction"></a>
 
-이 튜토리얼은 [Klaytn 토큰 표준](../../token-standard.md)([대체 가능 토큰 표준인 ERC-20과 호환](../../token-standard.md#fungible-token-standard-kip-7))을 따르는 토큰을 만드는 방법을 소개합니다.
+This tutorial helps you to create an example ERC-20 compatible token that conforms to the [Klaytn Token Standards](../../token-standard.md), especially [Fungible Token Standard \(ERC-20\)](../../token-standard.md#fungible-token-standard-kip-7).
 
-[ERC-20 토큰 표준](https://eips.ethereum.org/EIPS/eip-20)은 다음과 같이 2개의 이벤트와 9개의 메소드\(3개의 선택적 메소드\)를 정의합니다. ERC-20-호환 토큰은 다음의 인터페이스를 구현하기 위한 토큰 컨트랙트입니다.
+[ERC-20 Token Standard](https://eips.ethereum.org/EIPS/eip-20) defines two events and 9 methods \(including 3 optional methods\) as below. ERC-20-compatible tokens are token contracts that implements the following interface.
 
 ```text
 function name() public view returns (string) //optional
@@ -21,24 +21,24 @@ event Transfer(address indexed _from, address indexed _to, uint256 _value)
 event Approval(address indexed _owner, address indexed _spender, uint256 _value)
 ```
 
-위의 인터페이스를 기반으로 개발자는 새로운 기능과 논리를 추가하여 토큰을 사용자 정의하고, Klaytn 네트워크에 배포할 수 있습니다. 자세한 내용은 공식 [ERC-20 문서](https://eips.ethereum.org/EIPS/eip-20)를 참조하세요.
+Based on above interface, developers may customize tokens by adding new features and logics, and deploy on Klaytn network. For more information, refer to official [ERC-20 documentation](https://eips.ethereum.org/EIPS/eip-20).
 
-이 튜토리얼에서는 ERC-20 호환 토큰인 `MyERC20.sol`을 구현할 것입니다. 이 토큰은 사전 정의된 양의 토큰을 발행하고 모든 토큰을 이를 배포한 컨트랙트 소유자에게 전송합니다.
+In this tutorial, you are going to implement `MyERC20.sol`, an ERC-20 compatible token. This token will issue a predefined amount of tokens and sends all of the tokens to the contract owner on its deploy.
 
-`MyERC20.sol`은 OpenZeppelin의 ERC20 구현체를 기반으로 합니다. 이 튜토리얼에서 코드의 주요 부분은 [OpenZeppelin 2.3](https://github.com/OpenZeppelin/openzeppelin-solidity/releases/tag/v2.3.0)에서 가져온 것이며, 다음 솔리디티 파일은 `MyERC20.sol`을 구현하는 데 사용됩니다.
+`MyERC20.sol` is based on OpenZeppelin's ERC20 implementation. A major part of the code in this tutorial is forked from [OpenZeppelin 2.3 ](https://github.com/OpenZeppelin/openzeppelin-solidity/releases/tag/v2.3.0) and following Solidity files are used to implement `MyERC20.sol`.
 
 * [https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/token/ERC20/IERC20.sol](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/token/ERC20/IERC20.sol)
 * [https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/token/ERC20/ERC20.sol](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/token/ERC20/ERC20.sol)
 * [https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/token/ERC20/ERC20Detailed.sol](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/token/ERC20/ERC20Detailed.sol)
 * [https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/math/SafeMath.sol](https://github.com/OpenZeppelin/openzeppelin-solidity/blob/v2.3.0/contracts/math/SafeMath.sol)
 
-이 튜토리얼의 나머지 부분은 다음과 같이 구성됩니다.
+The rest of this tutorial is organized as follows.
 
-* [1. ERC-20 스마트 컨트랙트 작성](1-erc20.md)
-  * 1.1 전체 `MyERC20` 코드와 `MyERC20` 코드의 전체 구조
-  * 1.2 중요 함수 살펴보기
-* [2. 스마트 컨트랙트 배포](2-erc20.md)
-  * 2.1 Klaytn IDE를 사용하여 스마트 컨트랙트 배포
-  * 2.2 truffle을 사용하여 스마트 컨트랙트 배포
-* [3. ERC-20 토큰과 Klaytn Wallet 간의 상호작용](3-erc20.md)
+* [1. Writing ERC-20 smart contract](1-erc20.md)
+  * 1.1 Overall structure of `MyERC20` code with whole `MyERC20` code
+  * 1.2 Take a look at important functions
+* [2. Deploying smart contract](2-erc20.md)
+  * 2.1 Deploying smart contract using Klaytn IDE
+  * 2.2 Deploying smart contract using truffle
+* [3. Interacting between ERC-20 token and Klaytn wallet](3-erc20.md)
 
