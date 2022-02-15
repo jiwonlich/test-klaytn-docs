@@ -1,20 +1,20 @@
-# 계정 관리 <a id="account-management"></a>
+# Account Management <a id="account-management"></a>
 
-**`경고`**: 비밀번호를 기억하세요. 계정 비밀번호를 잊어버린 경우, 해당 계정에 액세스할 수 없습니다. **여기에는** _**비밀번호 찾기**_ **옵션이 없습니다. 절대 잊지 말아주세요.**
+**`WARNING`**: Remember your password. If you lose the password of your account, you will not be able to access that account. **There is no** _**forgot my password**_ **option here. Never forget it.**
 
-Klaytn은 개발자가 계정을 관리할 수 있도록 두 가지 편리한 명령행 도구인 `ken`과 `자바스크립트 콘솔`을 제공합니다. 개인키를 암호화되지 않은 형식으로 내보내는 것은 지원되지 않습니다.
+Klaytn provides two handy command-line tools, `ken` and `JavaScript console`, for developers to manage accounts. Note that exporting your private key in an unencrypted format is NOT supported.
 
 ## ken <a id="ken"></a>
 
-Klaytn 엔드포인트 노드 바이너리 `ken`은 `account` 명령을 통해 계정 관리 기능을 제공합니다. `account` 명령으로 새 계정을 만들고, 기존의 모든 계정을 나열하고, 개인키를 새 계정으로 가져오고, 최신 키 형식으로 옮기거나(migrate), 암호를 변경할 수 있습니다.
+The Klaytn Endpoint Node binary `ken` provides account management via the `account` command. The command `account` lets you create new accounts, lists all existing accounts, imports a private key into a new account, migrates to the newest key format, and changes your password.
 
-### 사용법 <a id="usage"></a>
+### Usage <a id="usage"></a>
 
 ```bash
 $ ken account <command> [options...] [arguments...]
 ```
 
-**명령어**
+**Commands**
 
 ```bash
 $ ken account -help
@@ -27,7 +27,7 @@ COMMANDS:
 ...
 ```
 
-`ken account <command> --help`로 하위 명령에 대한 정보를 얻을 수 있습니다.
+You can get info about subcommands by `ken account <command> --help`.
 
 ```text
 $ ken account list --help
@@ -44,25 +44,25 @@ DATABASE OPTIONS:
   --db.no-partitioning  Disable partitioned databases for persistent storage
 ```
 
-### 데이터 디렉토리 <a id="data-directory"></a>
+### Data Directory <a id="data-directory"></a>
 
-키스토어 파일은 `<DATADIR>/keystore`에 저장됩니다. 아래와 같이 데이터 디렉토리를 지정할 수 있습니다. `--datadir` 옵션과 함께 `ken account` 명령을 실행하는 것이 권장됩니다. 계정을 엔드포인트 노드와 원활하게 공유할 수 있도록 `kend.conf`에 설정된 데이터 디렉토리가 `DATA_DIR`을 가리키도록 하세요.
+Keystore files are stored under `<DATADIR>/keystore`. You can specify the data directory as below. It is highly recommended to execute `ken account` command with `--datadir` option. Make the data directory point to the `DATA_DIR` set in the `kend.conf` to seamlessly share the accounts with your Endpoint Node.
 
 ```bash
 $ ken account new --datadir <DATADIR>
 $ ken account new --datadir "~/kend_home"
 ```
 
-데이터 디렉토리를 지정하지 않으면, 기본 위치는 다음과 같습니다.
+If you do not specify the data directory, the default location is as follows.
 
 * Mac: `~/Library/KEN`
 * Linux: `~/.ken`
 
-## 자바스크립트 콘솔 <a id="javascript-console"></a>
+## JavaScript Console <a id="javascript-console"></a>
 
-자바스크립트 콘솔에 연결하려면, EN이 실행 상태에 있어야합니다. 자세한 내용은 [EN 시작하기](../quick-start/launch-an-en.md)를 살펴보세요. EN을 시작하고 다음과 같이 콘솔에 연결하세요.
+To connect to the JavaScript console, an EN must be in running status. For more information, see [Launching an EN](../quick-start/launch-an-en.md). Start an EN and attach to the console as follows.
 
-### 사용법 <a id="usage"></a>
+### Usage <a id="usage"></a>
 
 ```bash
 $ kend start
@@ -78,9 +78,9 @@ instance: Klaytn/vX.X.X/XXXX-XXXX/goX.X.X
 >
 ```
 
-**명령어**
+**Commands**
 
-`personal` 또는 `klay`를 입력해 사용 가능한 함수 목록을 가져옵니다. 이 튜토리얼에서는 다음 함수들을 확인할 수 있습니다.
+Type `personal` or `klay` to get the list of available functions. In this tutorial, we are going to visit the following functions.
 
 ```bash
 > personal.newAccount()
@@ -90,7 +90,7 @@ instance: Klaytn/vX.X.X/XXXX-XXXX/goX.X.X
 > klay.getBalance()
 ```
 
-### 데이터 디렉토리 <a id="data-directory"></a>
+### Data Directory <a id="data-directory"></a>
 
-계정을 만들 때 키스토어 파일은 `<DATADIR>/keystore`에 저장됩니다. `<DATADIR>`은 `kend.conf`에 설정된 `DATA_DIR`입니다. 주어진 예시와 함께 빠른 시작 가이드를 따랐다면, `~/kend_home`일 것입니다.
+When you create an account, the keystore file is stored under `<DATADIR>/keystore`. The `<DATADIR>` is the `DATA_DIR` set in the `kend.conf`. If you follow the quick start guide with the given example, it must be `~/kend_home`.
 
