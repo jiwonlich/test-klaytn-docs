@@ -1,34 +1,45 @@
-# 용어집 <a id="glossary"></a>
+# Glossary <a id="glossary"></a>
 
-| 용어                   | 설명                                                                                                                                                                      |
-|:-------------------- |:----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| dApp                 | Decentralized application                                                                                                                                               |
-| 블록 보상(Block Rewards) | 블록생성시 새로 발행한 KLAY와 사용한 수수료 총합                                                                                                                                           |
-| 부트노드(Bootnode)       | 부트노드는 PN 및 EN이 네트워크에 자신을 등록하고 다른 노드에 연결하는 것을 도와주는 노드입니다.                                                                                                                |
-| caver-js             | [caver-js](../dapp/sdk/caver-js/README.md) is a JavaScript API library that allows developers to interact with a Klaytn node.                                           |
-| caver-java           | [caver-java](../dapp/sdk/caver-java/README.md) is a Java API library that allows developers to interact with a Klaytn node.                                             |
-| CC                   | [코어 셀(Core Cell)](../node/core-cell/README.md). 코어 셀은 Klaytn 블록체인 네트워크에서 블록을 생성하는 역할을 합니다.                                                                              |
-| CCN                  | 코어 셀 네트워크(CCN). 네트워크는 제출된 트랜잭션를 검증하고 실행하는 코어 셀(CC)로 구성됩니다.  CCN은 또한 트랜잭션을 포함한 블록을 생성하고 전파하는 역할을 합니다.                                                                    |
-| CN                   | Klaytn 컨센서스 노드(Consensus Node). 코어 셀 네트워크에서 다른 CN과 새로운 블록을 생성하는 노드. [코어 셀(Core Cell)](../node/core-cell/README.md) 참조.                                                  |
-| CNN                  | 컨센서스 노드 네트워크(Consensus Node Network, CNN). CNN은 CN으로 구성된 완전 메시형 (full mesh) 네트워크입니다.                                                                                    |
-| 위원회(Committee)       | 비잔틴 장애 허용 Byzantine fault-tolerant (BFT) 컨센서스에 참여하는 선택된 컨센서스 노드 그룹.  위원회는 하나의 proposer와 여러 validator로 구성됩니다.                                                            |
-| 카운슬(Council)         | 위원회(commitee)가 될 수 있는 모든 컨센서스 노드.                                                                                                                                       |
-| EN                   | [엔드포인트 노드(Endpoint Node)](../node/endpoint-node/README.md). 엔드포인트 노드는 블록체인 네트워크의 말단지점 노드로  RPC API 요청을 처리하는 역할을 합니다.                                                    |
-| ENN                  | 엔드포인트 노드 네트워크. ENN은 주로 트랜잭션을 생성하고, RPC API 요청을 처리하며, 서비스체인의 데이터 요청을 처리하는 엔드포인트 노드(EN)로 구성됩니다.                                                                           |
-| EOA                  | 외부 소유 계정(EOA, Externally Owned Account). [Klaytn Account Types](../klaytn/design/accounts.md#klaytn-account-types) 참조.                                                  |
-| 풀노드(Full node)       | 블록체인에서 생성된 모든 블록을 가지고 있는 노드.                                                                                                                                            |
-| KGF                  | Klaytn Growth Fund. [Token Economy - Klaytn Growth Fund] 참조.                                                                                                            |
-| KIR                  | Klaytn 개선 준비금(Klaytn Improvement Reserve). [Token Economy - Klaytn Improvement Reserve] 참조.                                                                             |
-| KLAY                 | [KLAY](../klaytn/design/klaytn-native-coin-klay.md)는 Klaytn 내부에서 통용되는 주요 암호화폐로, 스마트 컨트랙트 생성/실행 및 KLAY 전송시 트랜잭션 수수료를 지불하는데 사용됩니다. 또한 KLAY의 통화 단위이며 1 KLAY는 10^18 peb입니다. |
-| KLVM                 | [Klaytn 가상머신](../klaytn/design/computation/klaytn-virtual-machine/klaytn-virtual-machine.md)                                                                            |
-| peb                  | KLAY의 가장 작은 통화 단위. [KLAY의 단위](../klaytn/design/klaytn-native-coin-klay.md#units-of-klay)를 참고해주세요.                                                                       |
-| PN                   | Klaytn 프록시 노드. Klaytn 엔드포인트 노드 네트워크에서 받은 트랜잭션을 CN에 제출하는 노드. [코어 셀(Core Cell)](../node/core-cell/README.md) 참조.                                                          |
-| PNN                  | 프록시 노드 네트워크(Proxy Node Network). PNN은 CCN의 PN들로만 구성된 네트워크입니다.                                                                                                           |
-| 제안자(Proposer)        | 새로운 블록을 제안하는 컨센서스 노드.                                                                                                                                                   |
-| Proposer reward      | 블록 제안자(Proposer)가 블록 보상(Block rewards)으로부터 받아가는 KLAY 금액.                                                                                                                |
-| SCN                  | 서비스체인 네트워크(Service Chain Network). 이 네트워크는 메인체인 대비 높은 성능, 독자적 노드 구성 또는 별개의 보안 수준이 필요한 서비스에 특화된 보조 블록 체인 네트워크입니다. SCN Operation Guide 참조.                                |
-| 서비스체인                | 하나 이상의 블록체인 기반 서비스를 실행할 수 있는 서비스 제공 업체 소유 블록체인.                                                                                                                         |
-| 단가(Unit Price)       | Klaytn이 유지하는 고정된 가스 가격. [Unit Price](../klaytn/design/transaction-fees/transaction-fees.md#klaytn-growth-fund) 참조.                                                      |
-| Validator            | 블록 제안자(Proposer)가 제안한 새로운 블록을 검증하는 컨센서스 노드.                                                                                                                             |
-| Validator reward    | 블록 검증자(validator)가 블록 보상(Block rewards)으로부터 받아가는 KLAY 금액                                                                                                                |
+| Term             | Description                                                                                                                                                                                                                                       |
+|:---------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| dApp             | Decentralized application                                                                                                                                                                                                                         |
+| Block reward     | Newly issued KLAY and the sum of transaction fees used in the block                                                                                                                                                                               |
+| Bootnode         | Bootnodes that helps PNs and ENs to register themselves in the network and to discover other nodes to connect to.                                                                                                                                 |
+| caver-js         | [caver-js][] is a JavaScript API library that allows developers to interact with a Klaytn node.                                                                                                                                                   |
+| caver-java       | [caver-java][] is a Java API library that allows developers to interact with a Klaytn node.                                                                                                                                                       |
+| CC               | [Core Cell][]. Core Cell plays a role of generating blocks in the Klaytn blockchain network.                                                                                                                                                      |
+| CCN              | Core Cell Network. The network consists of Core Cells \(CCs\) that verify and execute submitted transactions.  CCN is also responsible for the creation and propagation of blocks with the transactions.                                        |
+| CN               | Klaytn Consensus Node. A node which creates a new block with other CN participants of the Core Cell Network. Details at [Core Cell][]                                                                                                             |
+| CNN              | Consensus Node Network. CNN is a full-mesh network of CNs.                                                                                                                                                                                        |
+| Committee        | A group of selected consensus nodes participating in Byzantine fault-tolerant \(BFT\) consensus. Committee consists of a proposer and validators.                                                                                               |
+| Council          | All consensus nodes which can be a member of committee                                                                                                                                                                                            |
+| EN               | [Endpoint Node][]. Endpoint Nodes play a role of an endpoint of the blockchain network to handle RPC API requests.                                                                                                                                |
+| ENN              | Endpoint Node Network. The network consists of the Endpoint Nodes \(ENs\), which mainly create transactions, handle RPC API requests, or process the data from service chains.                                                                  |
+| EOA              | Externally Owned Account. See [Klaytn Account Types][]                                                                                                                                                                                            |
+| Full node        | A node containing all the blocks generated from a blockchain                                                                                                                                                                                      |
+| KGF              | Klaytn Growth Fund. See [Token Economy - Klaytn Growth Fund].                                                                                                                                                                                     |
+| KIR              | Klaytn Improvement Reserve. See [Token Economy - Klaytn Improvement Reserve].                                                                                                                                                                     |
+| KLAY             | [KLAY][] is the main internal transferable cryptocurrency of Klaytn and is used to pay transaction fees when creating or executing smart contracts or when transferring KLAY. Also currency unit of KLAY and 1 KLAY is 10^18 peb.                 |
+| KLVM             | [Klaytn Virtual Machine][]                                                                                                                                                                                                                        |
+| peb              | The smallest currency unit of KLAY. See [Unit of KLAY][].                                                                                                                                                                                         |
+| PN               | Klaytn Proxy Node. A node which submits transactions received from the Klaytn Endpoint Node Network to a CN or CNs. Details at [Core Cell][]                                                                                                      |
+| PNN              | Proxy Node Network. PNN is the network consisting of PNs in CCN.                                                                                                                                                                                  |
+| Proposer         | A consensus node proposing a new block                                                                                                                                                                                                            |
+| Proposer reward  | Amount of KLAY which a proposer receives from block reward                                                                                                                                                                                        |
+| SCN              | Service Chain Network. This network is an auxiliary blockchain network specialized for the services that require higher performance, different node configurations, or security levels compared to the main chain. Details at SCN Operation Guide |
+| Service Chain    | A service-provider-owned blockchain capable of running more than one blockchain-based service                                                                                                                                                     |
+| Unit price       | A fixed price of gas maintained by Klaytn. Details at [Unit Price][].                                                                                                                                                                             |
+| Validator        | A consensus node validating a new block proposed by a proposer                                                                                                                                                                                    |
+| Validator reward | Total amount of KLAY that validators receive from block reward                                                                                                                                                                                    |
+
+
+[Klaytn Virtual Machine]: ../klaytn/design/computation/klaytn-virtual-machine/klaytn-virtual-machine.md
+[Klaytn Account Types]: ../klaytn/design/accounts.md#klaytn-account-types
+[KLAY]: ../klaytn/design/klaytn-native-coin-klay.md
+[Unit of KLAY]: ../klaytn/design/klaytn-native-coin-klay.md#units-of-klay
+[Unit Price]: ../klaytn/design/transaction-fees/transaction-fees.md#klaytn-growth-fund
+[Core Cell]: ../node/core-cell/README.md
+[Endpoint Node]: ../node/endpoint-node/README.md
+[caver-js]: ../dapp/sdk/caver-js/README.md
+[caver-java]: ../dapp/sdk/caver-java/README.md
 
