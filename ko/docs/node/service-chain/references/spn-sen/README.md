@@ -1,1 +1,1 @@
-# SPN/SEN 사용 설명서
+# SPN/SEN User Guide
