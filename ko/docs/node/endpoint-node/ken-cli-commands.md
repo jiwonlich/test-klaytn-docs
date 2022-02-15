@@ -1,15 +1,15 @@
-# ken CLI 명령어 <a id="ken-cli-commands"></a>
+# ken CLI commands <a id="ken-cli-commands"></a>
 
-`ken` Klaytn 엔드포인트 노드의 커맨드라인 인터페이스(CLI)입니다.
+`ken` is a command-line interface for Klaytn Endpoint Node.
 
 ```bash
 USAGE:
    ken [options] command [command options] [arguments...]
 ```
 
-## 명령어 <a id="commands"></a>
+## Commands <a id="commands"></a>
 
-`ken`에는 다음의 명령어들이 있습니다.
+`ken` has the following commands.
 
 ```bash
 COMMANDS:
@@ -23,7 +23,7 @@ COMMANDS:
    help, h     Shows a list of commands or help for one command
 ```
 
-`-h` 옵션을 사용하여 각 명령에 대한 자세한 사용법을 확인해주세요.
+To get a detailed usage guideline for each command, give `-h` option.
 
 ```bash
 $ ken account -h
@@ -56,9 +56,9 @@ participating.
  ...
 ```
 
-## 자바스크립트 콘솔 <a id="javascript-console"></a>
+## JavaScript Console <a id="javascript-console"></a>
 
-Klaytn 엔드포인트 노드는 자바스크립트 콘솔과 함께 제공됩니다. 콘솔 명령행에서 EN을 향한 Klaytn API 호출 중 일부를 시작할 수 있습니다. 자바스크립트 콘솔에 연결하려면 다음 명령을 실행하세요.
+Klaytn Endpoint Node comes with JavaScript console. From the console command line, you can initiate part of Klaytn API calls to your EN. To attach to the JavaScript console, execute the following command.
 
 ```bash
 $ ken attach ~/kend_home/klay.ipc
@@ -71,16 +71,16 @@ Welcome to the Klaytn JavaScript console
  >
 ```
 
-명령어 `attach`는 이미 실행 중인 노드에 연결하고, 명령어 `console`은 노드를 새로 실행시키고 연결합니다.
+`attach` command connects to the running node, while `console` command launches a node and connects to it.
 
 ```bash
-   attach       대화형 자바스크립트 환경을 시작합니다 (노드에 연결합니다)
-   console      대화형 자바스크립트 환경을 시작합니다
+   attach      Start an interactive JavaScript environment (connect to node)
+   console     Start an interactive JavaScript environment
 ```
 
-### 모듈 API <a id="module-apis"></a>
+### Module APIs <a id="module-apis"></a>
 
-콘솔 프롬프트에 모듈명을 입력하면 해당 모듈에서 사용 가능한 프로퍼티와 함수 목록이 표시됩니다. For the details of functions, please see [Klaytn API](../../dapp/json-rpc/api-references/README.md).
+If you type the module name on the console prompt, you will see the available properties and functions of the module. For the details of functions, please see [Klaytn API](../../dapp/json-rpc/api-references/README.md).
 
 ```javascript
 > personal
