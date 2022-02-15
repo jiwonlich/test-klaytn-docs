@@ -1,16 +1,16 @@
-# 로깅 <a id="logging"></a>
+# Logging <a id="logging"></a>
 
-## 로그 파일 위치 <a id="log-file-location"></a>
-
-
-
-## 로그 파일 형식 <a id="log-file-format"></a>
+## Log File Location <a id="log-file-location"></a>
 
 
 
-## 로그 레벨 <a id="log-levels"></a>
+## Log File Format <a id="log-file-format"></a>
 
 
 
-## 에러 로그 <a id="error-logs"></a>
+## Log Levels <a id="log-levels"></a>
+
+
+
+## Error Logs <a id="error-logs"></a>
 
