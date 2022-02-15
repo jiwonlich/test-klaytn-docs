@@ -1,12 +1,12 @@
-# 노드 상태 확인<a id="checking-node-status"></a>
+# Checking Node Status <a id="checking-node-status"></a>
 
-## 프로세스 상태 <a id="process-status"></a>
+## Process Status <a id="process-status"></a>
 
-`systemctl`과 `kscnd`의 status 명령어를 사용하여 SCN의 프로세스 상태를 확인할 수 있습니다.
+It is possible to check the status of SCN's process using the status commands `systemctl` and `kscnd`.
 
 ### systemctl <a id="systemctl"></a>
 
-`systemctl`은 RPM과 함께 설치되며 SCN의 상태는 다음과 같이 확인할 수 있습니다.
+`systemctl` is installed along with the RPM, and the status of SCN can be checked as follows.
 
 ```bash
 $ systemctl status kscnd.service
@@ -24,22 +24,22 @@ Jan 09 11:42:39 ip-10-11-2-101.ap-northeast-2.compute.internal kscnd[29636]: Sta
 Jan 09 11:42:39 ip-10-11-2-101.ap-northeast-2.compute.internal systemd[1]: Started (null).
 ```
 
-위 예시처럼 `Active: active (running)` 등의 현재 상태를 확인할 수 있습니다.
+You can check the current status such as `Active: active (running)` in the example above.
 
 ### kscnd <a id="kscnd"></a>
 
-`kscnd`는 패키지와 함께 설치되며 SCN의 상태는 다음과 같이 확인할 수 있습니다.
+`kscnd` is installed along with the package, and the status of SCN can be checked as follows.
 
 ```bash
 $ kscnd status
 kscnd is running
 ```
 
-## 로그 <a id="logs"></a>
+## Logs <a id="logs"></a>
 
-로그는 `kscnd.out` 파일에 저장되어 있고, 이 파일은 `kscnd.conf` 파일의 `LOG_DIR` 필드에서 정의된 경로에 있습니다. 노드가 제대로 작동하면 다음과 같이 매초 블록을 가져오는 것을 볼 수 있습니다.
+The log is stored in `kscnd.out` file located in the path defined in the `LOG_DIR` field of the `kscnd.conf` file. When the node works properly, you can see that each block is imported per second as follows.
 
-예시:
+Example:
 
 ```bash
 $ tail -F ~/kscnd_home/logs/kscnd.out
@@ -56,13 +56,13 @@ $ tail -F ~/kscnd_home/logs/kscnd.out
   INFO[11/12,10:19:12 +09] [24] Committed                                 number=14 hash=dcd2bc…b2aec0 address=0xf8690562c0839C44B17AF421F7AaaA9F12dCc62b
 ```
 
-## 조회<a id="queries"></a>
+## Queries <a id="queries"></a>
 
-### kscn 콘솔 <a id="kscn-console"></a>
+### kscn console <a id="kscn-console"></a>
 
-Klaytn은 `kscn console`이라는 CLI 클라이언트를 제공합니다. 클라이언트를 사용하는 또 다른 방법은 IPC (inter-process communication)를 통해 프로세스에 연결하는 것입니다. `klay.ipc` IPC 파일은 SCN의 `data` 디렉토리에 있습니다.
+Klaytn provides a CLI client: `kscn console`. Another way of using the client is to connect to the process via IPC (inter-process communication). The IPC file `klay.ipc` is located in the `data` directory on an SCN.
 
-다음 명령을 실행하고 결과를 확인하세요.
+Please execute the following command and check out the result.
 
 ```text
 $ kscn attach ~/kscnd_home/klay.ipc
@@ -75,16 +75,16 @@ at block: 11573551 (Wed, 13 Feb 2019 07:12:52 UTC)
  >
 ```
 
-[API 문서](../../../../bapp/json-rpc/README.md)에서 사용가능한 명령어를 확인할 수 있습니다.
+You can check the usable commands on [API Document](../../../../bapp/json-rpc/README.md)
 
-SCN의 상태를 확인하기 위해 다음의 API를 사용할 수 있습니다.
+The useful APIs to check the status of SCN:
 
-* `klay.blockNumber` (최신 블록 번호를 가져옵니다)
-* `net.peerCount` (현재 연결된 Klaytn 노드의 수를 가져옵니다)
+* `klay.blockNumber` (to get the latest block number)
+* `net.peerCount` (to get the number of the connected Klaytn nodes currently)
 
 ### klay.blockNumber <a id="klay-blocknumber"></a>
 
-최신 블록 번호를 가져와 블록이 제대로 전파되었는지 확인할 수 있습니다.
+You can get the latest block number to see if blocks are propagated properly.
 
 ```text
 > klay.blockNumber
@@ -98,6 +98,6 @@ SCN의 상태를 확인하기 위해 다음의 API를 사용할 수 있습니다
 4
 ```
 
-위 명령은 메인체인의 EN을 제외하고 SCN이 연결한 노드의 수를 반환합니다.
+The above command line returns the number of nodes that the SCN connects to except the EN in the main chain.
 
 
