@@ -1,1 +1,1 @@
-# homi 명령어
+# homi commands
