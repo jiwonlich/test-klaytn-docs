@@ -1,80 +1,81 @@
-# 배포 가이드 <a id="deploy-guide"></a>
+# Deploy Guide <a id="deploy-guide"></a>
 
-Klaytn에 스마트 컨트랙트를 배포하는 방법에는 여러 가지가 있습니다. 이 문서는 다양한 도구를 사용하여 샘플 컨트랙트를 배포하기 위한 단계별 가이드를 제공합니다. 트랜잭션 수수료를 지불하기에 충분한 KLAY가 있는 Klaytn 계정이 있다고 가정합니다. 계정을 만들려면 [Klaytn Wallet](../toolkit/klaytn-wallet.md)을 참조하세요.
+There are various ways of deploying a smart contract to Klaytn. This document provides a step-by-step guide to deploy a sample contract using various tools. We assume that you have a Klaytn account with enough KLAY to pay the transaction fee. To create an account, please refer to [Klaytn Wallet](../toolkit/klaytn-wallet.md).
 
 ## Klaytn IDE <a id="klaytn-ide"></a>
 
-인터넷 브라우저를 열고 <0>https://ide.klaytn.com</0>으로 이동하세요.
+Open up your internet browser and go to https://ide.klaytn.com
 
 
-- 새 파일을 추가하세요.
+- Add a new file.
 
 ![](img/deploy-with-ide/deploy-with-ide.001.png)
 
 
-- 다음 코드(또는 배포하고자 하는 아무 코드)를 복사해 붙여넣습니다.
+- Copy and paste the following code (or any code you want to deploy).
 
 ```
 pragma solidity 0.5.6;
+
 contract Mortal {
-    /* 주소 타입의 소유자(owner) 변수 정의 */
+    /* Define variable owner of the type address */
     address payable owner;
-    /* 이 함수는 초기화 시점에 실행되어 컨트랙트 소유자를 설정합니다 */
+    /* This function is executed at initialization and sets the owner of the contract */
     constructor () public { owner = msg.sender; }
-    /* 컨트랙트에서 자금을 회수하는 함수 */
+    /* Function to recover the funds on the contract */
     function kill() public payable { if (msg.sender == owner) selfdestruct(owner); }
 }
 
 contract KlaytnGreeter is Mortal {
-    /* 문자열 타입의 변수 greeting 정의 */
+    /* Define variable greeting of the type string */
     string greeting;
-    /* 이 함수는 컨트랙트가 실행될 때 작동합니다 */
+    /* This runs when the contract is executed */
     constructor (string memory _greeting) public {
         greeting = _greeting;
     }
-    /* 주(Main) 함수 */
+    /* Main function */
     function greet() public view returns (string memory) {
         return greeting;
     }
 }
 ```
-- 컴파일러 버전을 설정하세요. 현재 0.4.24와 0.5.6 중에서 선택할 수 있습니다. (기본값은 0.5.6입니다.)
+- Set compiler version. Currently, you can choose between 0.4.24 and 0.5.6. (Default is 0.5.6.)
 
 ![](img/deploy-with-ide/deploy-with-ide.002.png)
 
 
-- 실행(Run) 탭을 클릭하세요. `환경(Environment)` 드롭다운에서 컨트랙트를 배포할 대상 네트워크를 선택할 수 있습니다. (Baobab은 테스트 네트워크이고 Cypress는 메인 네트워크입니다.)
+- Click Run tab. At `Environment` dropdown, you can choose a target network to deploy the contract. (Baobab is test network and Cypress is main network.)
 
 ![](img/deploy-with-ide/deploy-with-ide.003.png)
 
-- 네트워크를 선택한 후, `계정(Account)` 옆의 더하기 버튼을 클릭하여 계정을 가져옵니다. 네트워크에 컨트랙트를 배포하기에 충분한 `KLAY`를 가진 계정을 불러와야 합니다.
+- After choosing a network, import account by clicking on the plus button next to `Account`. Make sure to import account that has enough `KLAY` to deploy the contract on the network.
 
 ![](img/deploy-with-ide/deploy-with-ide.004.png)
 
-- 보낼 가스 한도 및 값을 설정하세요.
-  - 보다 복잡한 컨트랙트를 배포하는 경우 가스 한도를 더 높게 설정해야 할 수 있습니다. 이 예시에서는 그대로 두어도 됩니다.
-  - 배포 시 컨트랙트에 `KLAY`를 보내고 싶지 않다면 `값(Value)`을 0으로 설정하세요.
-- "Hello World!"를 생성자 함수의 인자로 입력하고 `배포(Deploy)` 버튼을 클릭하세요. 모든 것이 성공적으로 진행되었다면, 배포된 컨트랙트의 인스턴스가 아래에 표시됩니다.
+- Set Gas limit and Value to send.
+  - You may need to set higher Gas limit if you are deploying a more complicated contract. In this example, you can leave it as it is.
+  - Set `Value` to 0 unless you want to send `KLAY` to the contract at the time of deployment.
+- Enter "Hello World!" as an argument for constructor function and click on `Deploy` button. If everything goes successful, deployed contract's instance will show up below.
 
 ![](img/deploy-with-ide/deploy-with-ide.005.png)
 
-- 함수 버튼을 클릭하여 컨트랙트와 상호작용할 수 있습니다. 진한 파란색 버튼은 블록체인의 상태를 변경하고 가스를 소비하는 `전송(send)` 함수입니다. 하늘색 버튼은 상태를 변경하지 않고 트랜잭션 수수료를 요구하지 않는 `호출(call)` 함수입니다.
+- You can interact with the contract by clicking on the function buttons. Dark blue buttons are `send` functions which can change state on blockchain and consumes gas. Light blue buttons are `call` functions which do not change state and do not require gas fee.
 
 ![](img/deploy-with-ide/deploy-with-ide.006.png)
 
-자세한 내용은 이 [링크](../toolkit/klaytn-ide.md)를 참조하세요.
+For more details refer to this [link](../toolkit/klaytn-ide.md).
 
 ## Truffle  <a id="truffle"></a>
 
-트러플은 스마트 컨트랙트 배포 및 실행에 가장 널리 사용되는 프레임워크입니다.
+Truffle is the most popular framework for smart contract deployment and execution.
 
-- 다음 명령을 통해 설치하세요.
+- Install via the following command.
 
 ```
 $ sudo npm install -g truffle
 ```
 
-- 프로젝트 디렉토리를 설정하고, `truffle-hdwallet-provider-klaytn`를 설치하세요.
+- Set up a project directory, and install .`truffle-hdwallet-provider-klaytn`
 
 ```
 $ mkdir hello-klaytn
@@ -83,34 +84,35 @@ $ truffle init
 $ npm install truffle-hdwallet-provider-klaytn
 ```
 
-- `/contracts` 디렉토리 하에 `KlaytnGreeter.sol`를 생성하고 다음 코드를 복사합니다.
+- Create `KlaytnGreeter.sol` under `/contracts` directory and copy the following code.
 
 ```
 pragma solidity 0.5.6;
+
 contract Mortal {
-    /* 주소 타입의 소유자(owner) 변수 정의 */
+    /* Define variable owner of the type address */
     address payable owner;
-    /* 이 함수는 초기화 시점에 실행되어 컨트랙트 소유자를 설정합니다 */
+    /* This function is executed at initialization and sets the owner of the contract */
     constructor () public { owner = msg.sender; }
-    /* 컨트랙트에서 자금을 회수하는 함수 */
+    /* Function to recover the funds on the contract */
     function kill() public payable { if (msg.sender == owner) selfdestruct(owner); }
 }
 
 contract KlaytnGreeter is Mortal {
-    /* 문자열 타입의 변수 greeting 정의 */
+    /* Define variable greeting of the type string */
     string greeting;
-    /* 이 함수는 컨트랙트가 실행될 때 작동합니다 */
+    /* This runs when the contract is executed */
     constructor (string memory _greeting) public {
         greeting = _greeting;
     }
-    /* 주(Main) 함수 */
+    /* Main function */
     function greet() public view returns (string memory) {
         return greeting;
     }
 }
 ```
 
-- `/migrations/1_initial_migration.js`를 다음과 같이 수정합니다.
+- Modify `/migrations/1_initial_migration.js` as in the following.
 
 ```
 const Migrations = artifacts.require("./Migrations.sol");
@@ -121,7 +123,7 @@ module.exports = function(deployer) {
 };
 ```
 
-- 아래와 같이 `truffle-config.js`를 설정하세요. 컨트랙트를 배포할 충분한 `KLAY`를 가진 계정의 개인키를 입력하세요.
+- Set `truffle-config.js` as below. Make sure you enter the private key of an account that has enough `KLAY` to deploy the contract.
 
 ```
 const HDWalletProvider = require("truffle-hdwallet-provider-klaytn");
@@ -155,76 +157,77 @@ module.exports = {
   }
 };
 ```
-*참고*: 이 예제는 상업용으로 권장되지 않습니다. 개인키를 다룰 때 많은 주의를 기울이세요.
+*NOTE*: This example is not recommended for production use. Be very careful when dealing with private keys.
 
-- Klaytn 테스트넷에 배포.
+- Deploying on Klaytn testnet.
 
 ```
 $ truffle deploy --network testnet
 ```
 
-- Klaytn 메인넷에 배포.
+- Deploying on Klaytn mainnet.
 
 ```
 $ truffle deploy --network mainnet
 ```
 
-자세한 내용은 이 [링크](../toolkit/truffle.md)를 참조하세요.
+For more details refer to this [link](../toolkit/truffle.md).
 
 ## VVISP <a id="vvisp"></a>
-vvisp은 스마트 컨트랙트 개발을 위해 HEACHI LABS에서 제공하는 사용하기 쉬운 cli 도구/프레임워크입니다. 단일 명령만으로 환경을 쉽게 설정하고, Klaytn 스마트 컨트랙트를 배포 및 실행할 수 있습니다. 자세한 내용을 위해 다음 링크를 참조하세요.
+vvisp is an easy-to-use CLI tool/framework for developing smart contracts, provided by HEACHI LABS. You can easily set environment, deploy and execute Klaytn smart contracts with a single command. Refer to the following link for more details.
 - https://henesis.gitbook.io/vvisp/deploying-smart-contracts
 
 ## solc & caver-js <a id="solc-caver-js"></a>
 
-컨트랙트를 배포하는 또 다른 방법은 solc로 컨트랙트를 수동으로 컴파일하고 caver-js로 컨트랙트를 배포하는 것입니다.
+Another way to deploy contracts is manually compiling contracts with solc and deploying them with caver-js.
 
-- `KlaytnGreeter.sol`를 생성하고 다음 코드를 작성하세요.
+- Create `KlaytnGreeter.sol` and write the following code.
 
 ```
 pragma solidity 0.5.6;
+
 contract Mortal {
-    /* 주소 타입의 소유자(owner) 변수 정의 */
+    /* Define variable owner of the type address */
     address payable owner;
-    /* 이 함수는 초기화 시점에 실행되어 컨트랙트 소유자를 설정합니다 */
+    /* This function is executed at initialization and sets the owner of the contract */
     constructor () public { owner = msg.sender; }
-    /* 컨트랙트에서 자금을 회수하는 함수 */
+    /* Function to recover the funds on the contract */
     function kill() public payable { if (msg.sender == owner) selfdestruct(owner); }
 }
 
 contract KlaytnGreeter is Mortal {
-    /* 문자열 타입의 변수 greeting 정의 */
+    /* Define variable greeting of the type string */
     string greeting;
-    /* 이 함수는 컨트랙트가 실행될 때 작동합니다 */
+    /* This runs when the contract is executed */
     constructor (string memory _greeting) public {
         greeting = _greeting;
     }
-    /* 주(Main) 함수 */
+    /* Main function */
     function greet() public view returns (string memory) {
         return greeting;
     }
 }
 ```
 
-- solc 0.5.6을 설치하세요.
+- Install solc 0.5.6.
 
 ```
 $ sudo npm install -g solc@0.5.6
 ```
 
-- 컨트랙트를 컴파일하세요.
+- Compile the contract.
 
 ```
 $ solcjs KlaytnGreeter.sol --bin
 ```
 
-- caver-js를 설치하세요.
+- Install caver-js.
 
 ```
 $ npm install caver-js.
 ```
 
-- 같은 디렉토리에 다음 코드의 `deploy.js`를 생성하세요.
+- Create `deploy.js` in the same directory with the following code.
 
 ```
 const Caver = require("caver-js");
@@ -255,9 +258,9 @@ caver.klay.sendTransaction({
   console.log(error);
 })
 ```
-*참고*: 이 예제는 상업용으로 권장되지 않습니다. 개인키를 다룰 때 많은 주의를 기울이세요.
+*NOTE*: This example is not recommended for production use. Be very careful when dealing with private keys.
 
-- node 환경을 사용해 컨트랙트를 배포하세요.
+- Deploy the contract using node environment.
 
 ```
 $ node deploy.js
