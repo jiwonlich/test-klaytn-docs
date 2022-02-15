@@ -1,27 +1,27 @@
-# 스마트 컨트랙트 배포 <a id="deploy-a-smart-contract"></a>
+# Deploy a Smart Contract <a id="deploy-a-smart-contract"></a>
 
-이제 Klaytn 스마트 컨트랙트를 개발하고 배포할 준비가 되었습니다!
+Now we are ready to develop and deploy Klaytn smart contracts!
 
-## 프로젝트 디렉토리 생성 <a id="creating-a-project-directory"></a>
+## Creating a Project Directory <a id="creating-a-project-directory"></a>
 
-우선, 소스 코드가 위치할 디렉토리를 생성하세요.
+First of all, create a directory where the source code locates.
 
 ```bash
 $ mkdir klaytn-testboard
 $ cd klaytn-testboard
 ```
 
-## 트러플 초기화 <a id="initializing-truffle"></a>
+## Initializing Truffle <a id="initializing-truffle"></a>
 
-컨트랙트 배포를 위해 트러플을 초기화하세요.
+Initialize Truffle for contract deployment.
 
 ```bash
 $ truffle init
 ```
 
-## 간단한 솔리디티 스마트 컨트랙트 작성 <a id="writing-a-simple-smart-contract-in-solidity"></a>
+## Writing a Simple Smart Contract in Solidity <a id="writing-a-simple-smart-contract-in-solidity"></a>
 
-`klaytn-testboard/contracts` 디렉토리에 `KlaytnGreeter.sol`를 생성합니다.
+Create `KlaytnGreeter.sol` at `klaytn-testboard/contracts` directory.
 
 ```bash
 $ cd contracts
@@ -29,34 +29,34 @@ $ touch KlaytnGreeter.sol
 $ vi KlaytnGreeter.sol
 ```
 
-KlaytnGreeter.sol에 다음 코드를 작성하세요.
+Write the following code in KlaytnGreeter.sol.
 
 ```text
 pragma solidity 0.5.6;
 contract Mortal {
-    /* 주소 타입의 소유자(owner) 변수 정의 */
+    /* Define variable owner of the type address */
     address payable owner;
-    /* 이 함수는 초기화 시점에 실행되어 컨트랙트 소유자를 설정합니다 */
+    /* This function is executed at initialization and sets the owner of the contract */
     constructor () public { owner = msg.sender; }
-    /* 컨트랙트에서 자금을 회수하는 함수 */
+    /* Function to recover the funds on the contract */
     function kill() public payable { if (msg.sender == owner) selfdestruct(owner); }
 }
 
 contract KlaytnGreeter is Mortal {
-    /* 문자열 타입의 변수 greeting 정의 */
+    /* Define variable greeting of the type string */
     string greeting;
-    /* 이 함수는 컨트랙트가 실행될 때 작동합니다 */
+    /* This runs when the contract is executed */
     constructor (string memory _greeting) public {
         greeting = _greeting;
     }
-    /* 주(Main) 함수 */
+    /* Main function */
     function greet() public view returns (string memory) {
         return greeting;
     }
 }
 ```
 
-## 마이그레이션(Migration) 스크립트 수정 <a id="modifying-the-migration-script"></a>
+## Modifying the Migration Script <a id="modifying-the-migration-script"></a>
 
 ```bash
 $ cd ..
@@ -64,7 +64,7 @@ $ cd migrations
 $ vi 1_initial_migration.js
 ```
 
-`1_initial_migration.js`를 다음과 같이 수정합니다.
+Modify `1_initial_migration.js` as the following.
 
 ```javascript
 const Migrations = artifacts.require("./Migrations.sol");
@@ -75,18 +75,18 @@ module.exports = function(deployer) {
 };
 ```
 
-## 트러플을 사용하여 스마트 컨트랙트 배포 <a id="deploying-a-smart-contract-using-truffle"></a>
+## Deploying a Smart Contract using Truffle <a id="deploying-a-smart-contract-using-truffle"></a>
 
-truffle.js에 Klaytn의 네트워크 정보를 입력하세요.
+Enter Klaytn's network information into truffle.js.
 
-**`경고`**: 현재 Klaytn Baobab 네트워크의 가스 가격이 25 Gpeb으로 고정되어 있습니다. \(**다른 수치를 사용하려고 시도하면 오류가 반환됩니다**\).
+**`WARNING`**: Currently Klaytn Baobab network's gasPrice is fixed to 25 Gpeb \(**It returns an error if you attempt to use any other number**\).
 
 ```bash
 $ cd ..
 $ vi truffle-config.js
 ```
 
-아래와 같이 환경설정을 수정합니다.
+Modify configuration as below
 
 ```javascript
 // truffle-config.js
@@ -95,27 +95,27 @@ module.exports = {
         klaytn: {
             host: '127.0.0.1',
             port: 8551,
-            from: '0x75a59b94889a05c03c66c3c84e9d2f8308ca4abd', // 계정 주소를 입력하세요
-            network_id: '1001', // Baobab 네트워크 id
-            gas: 20000000, // 트랜잭션 가스 한도
-            gasPrice: 25000000000, // Baobab의 gasPrice는 25 Gpeb입니다
+            from: '0x75a59b94889a05c03c66c3c84e9d2f8308ca4abd', // enter your account address
+            network_id: '1001', // Baobab network id
+            gas: 20000000, // transaction gas limit
+            gasPrice: 25000000000, // gasPrice of Baobab is 25 Gpeb
         },
     },
     compilers: {
       solc: {
-        version: "0.5.6"    // 컴파일러 버전을 0.5.6로 지정
+        version: "0.5.6"    // Specify compiler's version to 0.5.6
       }
   }
 };
 ```
 
-다음 명령을 사용하여 컨트랙트를 배포하세요.
+Deploy the contract using the following command.
 
-**참고**: 배포할 네트워크를 선택하기 위해 `--network`를, 덮어 쓰기위해 `--reset`을 사용하세요.
+**NOTE**: Use `--network` to select which network to deploy and `--reset` to overwrite.
 
-**참고**: Klaytn 노드가 실행 중인지 확인하세요.
+**NOTE**: Make sure that your Klaytn node is running.
 
-컨트랙트 주소가 \`KlaytnGreeter: 뒤에 이어 표시됩니다.
+Your contract address is displayed followed \`KlaytnGreeter:
 
 ```bash
 $ truffle deploy --network klaytn --reset
@@ -132,7 +132,7 @@ Saving successful migration to network...
 Saving artifacts...
 ```
 
-**`경고`**: 계정이 잠겨 있으면 오류를 반환합니다.
+**`WARNING`**: It returns an error when your account is locked.
 
 ```bash
 Running migration: 1_initial_migration.js
@@ -142,7 +142,7 @@ Error encountered, bailing. Network state unknown. Review successful transaction
 Error: authentication needed: password or unlock
 ```
 
-다음은 계정을 잠금 해제하는 방법입니다.
+This is how you unlock your account.
 
 ```javascript
 > personal.unlockAccount('0x775a59b94889a05c03c66c3c84e9d2f8308ca4abd')
@@ -151,5 +151,5 @@ Passphrase:
 true
 ```
 
-다음으로 갈 차례입니다. 다시 배포해보세요.
+And then you are ready to go. Try deploy again.
 
