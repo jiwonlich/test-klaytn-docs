@@ -1,2 +1,2 @@
-# Klaytn 디자인 <a id="klaytn-design"></a>
+# Klaytn Design <a id="klaytn-design"></a>
 
