@@ -1,20 +1,20 @@
-# 서비스체인 <a id="service-chain"></a>
+# Service Chain <a id="service-chain"></a>
 
-## 튜토리얼 대상 <a id="intended-audience"></a>
+## Intended Audience <a id="intended-audience"></a>
 
 - dApp developers who need high TPS, minimal transaction fees, or data privacy.
-- 테스트를 위해 로컬 개인 네트워크 또는 원장 데이터베이스를 구축하려는 사람.
+- Anyone who wants to build a local private network or a ledger database for testing.
 
-## 서비스체인 개요 <a id="service-chain-overview"></a>
+## Service Chain Overview <a id="service-chain-overview"></a>
 
-Klaytn 서비스체인은 다음 기능을 제공합니다.
+Klaytn Service Chain provides the following features.
 
-- 즉각적인 완결성
-- 체인 간 토큰 전송.
-- 메인체인에 데이터 앵커링.
-- 엔터프라이즈 보안 요구 사항을 충족하기 위한 멀티시그 브리지 컨트랙트.
+- Immediate finality.
+- Cross-chain token transfer.
+- Data anchoring to the main chain.
+- Multi-sig bridge contract to meet enterprise security requirements.
 
 ![](../../klaytn/images/sc_connection.png)
 
 
-서비스체인에 대한 자세한 내용은 [Klaytn Scaling Solution](../../klaytn/scaling-solutions.md)를 참고해주세요.
+Read the [Klaytn Scaling Solution](../../klaytn/scaling-solutions.md) for more details about the Service Chain.
