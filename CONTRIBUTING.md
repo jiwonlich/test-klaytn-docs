@@ -4,7 +4,7 @@ Thank you for your interest in contributing to Klaytn. As an open source project
 
 ## How to Contribute
 
-1. Read this [contributing document](./CONTRIBUTING.md).
+1. Read this [contributing document](./contributing.md).
 2. Sign [Contributor Licensing Agreement (CLA)](#contributor-license-agreement-cla).
 3. Submit an issue with proper [labeling](#usage-of-labels).
 4. Please wait until the label changes to `contribution welcome` - otherwise, it is not ready to be worked on.
