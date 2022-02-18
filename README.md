@@ -13,7 +13,7 @@ In line with our commitment to decentralization, Klaytn and its documentations a
 
 ### A few things before contributing
 
-Read our [Code of Conducts] and [Style Guide].
+Read our [Code of Conducts](code-of-conducts.md) and [Style Guide](style-guide.md).
 
 ## Need Help? <a href="#need-help" id="need-help"></a>
 
