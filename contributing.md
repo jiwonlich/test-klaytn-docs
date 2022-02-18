@@ -1,34 +1,79 @@
-# Contribution Guide
+# Contributing Guidelines
 
-The following information provides a set of guidelines for contributing to the Klaytn Docs repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.
+Thank you for your interest in contributing to Klaytn. As an open source project, Klaytn is always open to the developer community and we welcome your contribution. Please read the guideline below and follow it in all interactions with the project.
 
-Contributions come in the form of writing documentation, raising issues, and any other actions that help develop the Klaytn protocol documentation.
+## How to Contribute (Via GitHub)
 
-## First steps
+1. Read this [contributing document](./contributing.md).
+2. Sign [Contributor Licensing Agreement (CLA)](#contributor-license-agreement-cla).
+3. Submit an issue with proper [labeling](#usage-of-labels).
+4. Please wait until the label changes to `contribution welcome` - otherwise, it is not ready to be worked on.
+5. After the label changed to `contribution welcome`, you can start working on the implementation. To avoid any duplicate efforts, it is recommended to update the issue so that other developers see someone working on the issue.
+6. Before making a PR, please make sure the suggested content changes are accurate. After submitting the PR, wait for code review and approval. The reviewer may ask you for additional commits or changes.
+7. Once the change has been approved, the PR is merged by the project moderator.
+8. After merging the PR, we close the pull request. You can then delete the now obsolete branch.
 
-The first step is to find an issue you want to fix. To identify issues we think are good for first-time contributors, we add the **good first issue** label.
+## How to Contribute (Via GitLab)
 
-If you find an existing issue that you want to work on or if you have a new issue to create, understand the workflow expected by maintainers of the Klaytn Docs repository.
+1. `TODO`
+2. `TODO`
+3. `TODO`
 
-### Propose documentation changes
+## Types of Contribution
+There are various ways to contribute and participate. Please read the guidelines below regarding the process of each type of contribution.
 
-Klaytn Docs requires everyone, without exception, to submit doc-change proposals by using a pull request (PR). PRs enable contributions from the community, easy testing, and straightforward peer review.
+-   [Issues and Bugs](#issues-and-bugs)
+-   [Content Contribution](#content-contribution)
 
-To contribute a doc-change proposal, use the following workflow:
+### Issues and Bugs
 
-1. [Fork the repository](https://github.com/klaytn-docs/docs).
-2. [Add an upstream](https://docs.github.com/) so that you can update your fork.
-3. Clone your fork to your computer.
-4. Create a branch and name it appropriately.
-5. Work on only one change in one pull request.
-6. Follow these conventions:
+If you find a bug or other issues in Klaytn, please [submit an issue](https://github.com/klaytn/klaytn/issues). Before submitting an issue, please invest some extra time to figure out that:
 
-    1. Make your changes adhering to the [Klaytn Docs Style Guide](STYLE-GUIDE.md) and the coding conventions described below. Generally, a commit serves a single purpose and differences should be easy to understand. Do not mix formatting fixes or code moves with actual code changes.
-    2. Commit your changes. Write a simple, straightforward commit message. To learn more, see [How to Write a Git Commit Message](https://chris.beams.io/posts/git-commit/).
-    3. Push your changes to your remote fork.
-    4. Create a PR on the Klaytn Docs repository.
-    5. Identify the type of PR by adding labels to it. For example, if you're still working on the changes, add the **work-in-progress** label. If you are proposing an enhancement, add the **enhancement** label.
-    6. Wait for your changes to be reviewed. If you are a maintainer, you can assign your PR to one or more reviewers. If you aren't a maintainer, one of the maintainers will assign a reviewer.
-    7. After you receive feedback from a reviewer, make the requested changes, commit them to your branch, and push them to your remote fork again.
+- The issue is not a duplicate issue.
+- The issue has not been fixed in the latest release of Klaytn.
+Please do not use the issue tracker for personal support requests. Use developer@klaytn.com for the personal support requests.
 
-After your PR is approved and validated, and no conflicts exist, it will be merged by a maintainer.
+When you report a bug, please make sure that your report has the following information.
+- Steps to reproduce the issue.
+- A clear and complete description of the issue.
+- Code and/or screen captures are highly recommended.
+
+After confirming your report meets the above criteria, [submit the issue](https://github.com/klaytn/klaytn/issues). Please use [labels](#usage-of-labels) to categorize your issue.
+
+### Content Contribution
+
+- `TODO`
+- `TODO`
+- `TODO`
+
+#### Usage of Labels
+
+You can use the following labels:
+
+Labels for initial issue categories:
+
+- issue/bug: Issues with the minor content typos and inaccuracy.
+- issue/content: Issues with major content change.
+
+Status of open issues (will be tagged by the project moderators):
+
+- (no label): The default status.
+- open/need more information : The issue's creator needs to provide additional information to review.
+- open/reviewing: The issue is under review.
+- open/re-label needed: The label needs to be changed to confirmed as being a `bug` or future `content`.
+- open/approved: The issue is confirmed as being a `bug` to be fixed or `content` to be developed.
+- open/contribution welcome: The content fix or update is approved and you are invited to contribute to it.
+
+Status of closed issues:
+
+- closed/fixed: A fix for the issue was provided.
+- closed/duplicate: The issue is also reported in a different issue and is being managed there.
+- closed/invalid: The issue cannot be reproduced.
+- closed/reject: The issue is rejected after review.
+- closed/wontfix: This issue will not be worked on.
+
+## Contributor License Agreement (CLA)
+
+Keep in mind when you submit your pull request, you'll need to sign the CLA via [CLA-Assistant](https://cla-assistant.io/klaytn/klaytn) for legal purposes. You will have to sign the CLA just one time, either as an individual or corporation.
+
+You will be prompted to sign the agreement by CLA Assistant (bot) when you open a Pull Request for the first time.
