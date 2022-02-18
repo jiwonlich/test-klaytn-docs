@@ -9,11 +9,11 @@ Description: >-
 
 ## Want to contribute to Klaytn Docs? <a id="want-to-contribute"></a>
 
-In line with our commitment to decentralization, Klaytn and its documentations are open source. Anyone can view, edit, fix its contents and make suggestions. You can either create a pull request on GitHub or use GitBook. Make sure to sign our [Contributor License Agreement (CLA)](www.naver.com) first. See our [license section](https://github.com) for more details.
+In line with our commitment to decentralization, Klaytn and its documentations are open source. Anyone can view, edit, fix its contents and make suggestions. You can either create a pull request on GitHub or use GitBook. Make sure to sign our [Contributor License Agreement (CLA)](https://cla-assistant.io/klaytn/klaytn) first. See our [license section](https://github.com/Krustuniverse-Klaytn-Group/test-klaytn-docs/wiki#license) for more details.
 
 ### A few things before contributing
 
-Read our [Code of Conducts](doc/code-of-conducts.md) and [Style Guide](doc/style-guide.md).
+Read our [Code of Conducts](https://github.com/Krustuniverse-Klaytn-Group/test-klaytn-docs/blob/master/code-of-conduct.md) and [Style Guide](https://github.com/Krustuniverse-Klaytn-Group/test-klaytn-docs/blob/master/style-guide.md).
 
 ## Need Help? <a href="#need-help" id="need-help"></a>
 
