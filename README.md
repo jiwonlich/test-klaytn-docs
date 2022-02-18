@@ -1,6 +1,6 @@
 ---
-description: >-
-  Klaytn Docs introduces [Klaytn](https://www.klaytn.com), the blockchain of choice for the era of web3 with high performance and great user experience. In these documents you will find detailed explanations on Klaytn along with guidelines and instructions on how to use Klaytn and interact with the Klaytn network.
+Description: >-
+  Klaytn Docs introduces Klaytn, the blockchain of choice for the era of web3 with high performance and great user experience. In these documents you will find detailed explanations on Klaytn along with guidelines and instructions on how to use Klaytn and interact with the Klaytn network.
 ---
 
 # Introduction
@@ -13,7 +13,7 @@ In line with our commitment to decentralization, Klaytn and its documentations a
 
 ### A few things before contributing
 
-Read our [Code of Conducts](code-of-conducts.md) and [Style Guide](style-guide.md).
+Read our [Code of Conducts](master/code-of-conducts.md) and [Style Guide](master/style-guide.md).
 
 ## Need Help? <a href="#need-help" id="need-help"></a>
 
