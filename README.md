@@ -12,9 +12,9 @@ In line with our commitment to decentralization, all Klaytn codebase and its doc
 
 ### A Few Things Before Contributing
 
-- Read our [Contribution Guide](./CONTRIBUTING.md) for a walk-through of the contribution process.
+- Read our [Contribution Guide](./contributing.md) for a walk-through of the contribution process.
 - Make sure to sign our [Contributor License Agreement (CLA)](https://cla-assistant.io/klaytn/klaytn) first. See our [License Section](https://github.com/Krustuniverse-Klaytn-Group/test-klaytn-docs/wiki#license) for more details.
-- Read our [Code of Conducts](./CODE-OF-CONDUCT.md) and [Style Guide](./STYLE-GUIDE.md).
+- Read our [Code of Conducts](./code-of-conduct.md) and [Style Guide](./style-guide.md).
 
 ## Need Help? <a href="#need-help" id="need-help"></a>
 
