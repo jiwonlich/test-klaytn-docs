@@ -2,23 +2,28 @@
 
 Thank you for your interest in contributing to Klaytn. As an open source project, Klaytn is always open to the developer community and we welcome your contribution. Please read the guideline below and follow it in all interactions with the project.
 
-## How to Contribute
+## How to Contribute (Via GitHub)
 
 1. Read this [contributing document](./contributing.md).
 2. Sign [Contributor Licensing Agreement (CLA)](#contributor-license-agreement-cla).
 3. Submit an issue with proper [labeling](#usage-of-labels).
 4. Please wait until the label changes to `contribution welcome` - otherwise, it is not ready to be worked on.
 5. After the label changed to `contribution welcome`, you can start working on the implementation. To avoid any duplicate efforts, it is recommended to update the issue so that other developers see someone working on the issue.
-6. Before making a PR, please make sure you fully tested the code. It is highly recommended to provide the test code as well. After submitting the PR, wait for code review and approval. The reviewer may ask you for additional commits or changes.
+6. Before making a PR, please make sure the suggested content changes are accurate. After submitting the PR, wait for code review and approval. The reviewer may ask you for additional commits or changes.
 7. Once the change has been approved, the PR is merged by the project moderator.
 8. After merging the PR, we close the pull request. You can then delete the now obsolete branch.
+
+## How to Contribute (Via GitLab)
+
+1. `TODO`
+2. `TODO`
+3. `TODO`
 
 ## Types of Contribution
 There are various ways to contribute and participate. Please read the guidelines below regarding the process of each type of contribution.
 
 -   [Issues and Bugs](#issues-and-bugs)
--   [Feature Requests](#feature-requests)
--   [Code Contribution](#code-contribution)
+-   [Content Contribution](#content-contribution)
 
 ### Issues and Bugs
 
@@ -35,9 +40,11 @@ When you report a bug, please make sure that your report has the following infor
 
 After confirming your report meets the above criteria, [submit the issue](https://github.com/klaytn/klaytn/issues). Please use [labels](#usage-of-labels) to categorize your issue.
 
-### Feature Requests
+### Content Contribution
 
-You can also use the [issue tracker](https://github.com/klaytn/klaytn/issues) to request a new feature or enhancement. Note that any code contribution without an issue link will not be accepted. Please submit an issue explaining your proposal first so that Klaytn community can fully understand and discuss the idea. Please use [labels](#usage-of-labels) for your feature request as well.
+- `TODO`
+- `TODO`
+- `TODO`
 
 #### Usage of Labels
 
@@ -45,18 +52,17 @@ You can use the following labels:
 
 Labels for initial issue categories:
 
-- issue/bug: Issues with the code-level bugs.
-- issue/documentation: Issues with the documentation.
-- issue/enhancement: Issues for enhancement requests.
+- issue/bug: Issues with the minor content typos and inaccuracy.
+- issue/content: Issues with major content change.
 
 Status of open issues (will be tagged by the project moderators):
 
 - (no label): The default status.
 - open/need more information : The issue's creator needs to provide additional information to review.
 - open/reviewing: The issue is under review.
-- open/re-label needed: The label needs to be changed to confirmed as being a `bug` or future `enhancement`.
-- open/approved: The issue is confirmed as being a `bug` to be fixed or `enhancement` to be developed.
-- open/contribution welcome: The fix or enhancement is approved and you are invited to contribute to it.
+- open/re-label needed: The label needs to be changed to confirmed as being a `bug` or future `content`.
+- open/approved: The issue is confirmed as being a `bug` to be fixed or `content` to be developed.
+- open/contribution welcome: The content fix or update is approved and you are invited to contribute to it.
 
 Status of closed issues:
 
@@ -65,16 +71,6 @@ Status of closed issues:
 - closed/invalid: The issue cannot be reproduced.
 - closed/reject: The issue is rejected after review.
 - closed/wontfix: This issue will not be worked on.
-
-### Code Contribution
-
-Please follow the coding style and quality requirements to satisfy the product standards. You must follow the coding style as best as you can when submitting code. Take note of naming conventions, separation of concerns, and formatting rules.
-
-The go implementation of Klaytn uses [godoc](https://godoc.org/golang.org/x/tools/cmd/godoc)
-to document its source code. For the guideline of official Go language, please
-refer to the following websites:
-- https://golang.org/doc/effective_go.html#commentary
-- https://blog.golang.org/godoc-documenting-go-code
 
 ## Contributor License Agreement (CLA)
 
