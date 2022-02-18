@@ -1,4 +1,4 @@
-# Contributing
+# Contribution Guide
 
 The following information provides a set of guidelines for contributing to the Klaytn Docs repo. Use your best judgment, and, if you see room for improvement, please propose changes to this document.
 
