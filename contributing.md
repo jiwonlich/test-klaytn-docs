@@ -13,12 +13,6 @@ Thank you for your interest in contributing to Klaytn. As an open source project
 7. Once the change has been approved, the PR is merged by the project moderator.
 8. After merging the PR, we close the pull request. You can then delete the now obsolete branch.
 
-## How to Contribute (Via GitLab)
-
-1. `TODO`
-2. `TODO`
-3. `TODO`
-
 ## Types of Contribution
 There are various ways to contribute and participate. Please read the guidelines below regarding the process of each type of contribution.
 
