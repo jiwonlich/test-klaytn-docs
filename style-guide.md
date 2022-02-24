@@ -51,7 +51,7 @@ Use sentence-style capitalization in all levels of headings.
 
 Use the present tense and active voice.
 
-### Klaytn conventions
+### Conventions
 
 - KLAY is always capitalized. There is no plural form. (2 KLAY)
 - Klaytn is written in sentence case.
