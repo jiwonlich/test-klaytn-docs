@@ -15,7 +15,7 @@ Thank you for your interest in contributing to Klaytn. As an open source project
 
 ## How to Contribute (Via GitLab)
 
-1. `TODO`
+1. `TODO`dddd
 2. `TODO`
 3. `TODO`
 
