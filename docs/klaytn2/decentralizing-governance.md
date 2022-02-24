@@ -15,3 +15,5 @@ A stake-based governance model will be introduced to enable governance participa
 
 ## Ultimate Goal of Decentralization <a id="ultimate-goal-of-decentralization"></a>
 When the level of metaversification crosses the critical threshold, Klaytn governance will be fully decentralized with DAOs and builders. Ultimately, Klaytn will evolve into a DAO of DAOs and a platform for DAOs to communicate the voices of Klaytn Communities through on-chain mechanisms.
+
+## Save the dolphins
